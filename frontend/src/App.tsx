@@ -1,13 +1,13 @@
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Home from "./components/HomePage/Home"
 import Investments from "./components/InvestmentPage/Investments"
-import AuthPage from "./components/AuthPage/AuthPage"
+import Signup from "./components/AuthPage/Signup"
 import Navbar from "./components/utilities/Navbar"
 import { UserProvider } from "./context/ContextProvider"
-import Dashboard from "./components/DashboardPage/SideBar"
+// import Dashboard from "./components/DashboardPage/SideBar"
 import SideBar from "./components/DashboardPage/SideBar"
-import { Sidebar } from "lucide-react"
+// import { Sidebar } from "lucide-react"
 import FinDashboard from "./components/DashboardPage/FinDashboard"
 import { ThemeProvider } from "@/components/theme-provider"
 import StocksBlock from "./components/DashboardPage/StocksBlock"
@@ -42,7 +42,7 @@ function App() {
 
               </Route>
 
-              <Route path="/auth" element={<AuthPage />} />
+              <Route path="/auth" element={<Signup />} />
             </Routes>
           </UserProvider>
 
