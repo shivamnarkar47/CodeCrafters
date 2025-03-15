@@ -283,8 +283,9 @@ class PortfolioAPIView(APIView):
             
             return Response({
                 "portfolio": {
+                    "wallet_balance": request.user.wallet,
                     "beta": portfolio.beta,
-                    "total_value": str(portfolio.total_value),
+                    "asset_value": str(portfolio.total_value),
                     "last_updated": portfolio.last_updated,
                 },
                 "positions": [{
