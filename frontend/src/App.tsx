@@ -1,29 +1,64 @@
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Home from "./components/HomePage/Home"
 import Investments from "./components/InvestmentPage/Investments"
-import AuthPage from "./components/AuthPage/AuthPage"
 import Navbar from "./components/utilities/Navbar"
 import { UserProvider } from "./context/ContextProvider"
-import Dashboard from "./components/DashboardPage/Dashboard"
+// import Dashboard from "./components/DashboardPage/SideBar"
+import SideBar from "./components/DashboardPage/SideBar"
+// import { Sidebar } from "lucide-react"
+import FinDashboard from "./components/DashboardPage/FinDashboard"
+import { ThemeProvider } from "@/components/theme-provider"
+import StocksBlock from "./components/DashboardPage/StocksBlock"
+import BondsBlock from "./components/DashboardPage/BondsBlock"
+import InsuranceBlock from "./components/DashboardPage/InsuranceBlock"
+import WatchList from "./components/DashboardPage/WatchList"
+import SignIn from "./components/AuthPage/SignIn"
+import SignUp from "./components/AuthPage/SignUp"
+import CryptoBlock from "./components/DashboardPage/CryptoBlock"
+import CryptoBlockID from "./components/DashboardPage/CryptoBlockID"
+
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <UserProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
 
-          <Navbar />
+        <BrowserRouter>
+          <UserProvider>
 
-          <Routes>
-            <Route path="/" element={<Home />} index />
-            <Route path="/:uid/dashboard" element={<Dashboard />} />
-            <Route path="/investments" element={<Investments />} />
-            <Route path="/auth" element={<AuthPage />} />
-          </Routes>
-        </UserProvider>
+            <Navbar />
 
-      </BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} index />
+              <Route path="/dashboard" element={<SideBar />}>
+                <Route index element={<FinDashboard />} />
+                <Route path="explore" >
+                  <Route path="stocks" element={<StocksBlock />} />
+                  <Route path="crypto" >
+                    <Route index element={<CryptoBlock />} />
+                    <Route path=":id" element={<CryptoBlockID />} />
+                  </Route>
+                  <Route path="bonds" element={<BondsBlock />} />
+                  <Route path="insurance" element={<InsuranceBlock />} />
+                </Route>
+                <Route path="watchlist" element={<WatchList />} />
+                <Route path="investments" element={<Investments />} />
+
+
+
+              </Route>
+
+              <Route path="/auth" >
+                <Route index element={<SignIn />} />
+                <Route path="signup" element={<SignUp />} />
+              </Route>
+
+            </Routes>
+          </UserProvider>
+
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   )
 }

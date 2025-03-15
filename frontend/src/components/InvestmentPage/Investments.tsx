@@ -1,8 +1,9 @@
-import React from 'react'
 
 const Investments = () => {
   return (
-    <div>Investments</div>
+    <div>
+      Investments
+    </div>
   )
 }
 
