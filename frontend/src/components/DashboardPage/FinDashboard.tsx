@@ -1,8 +1,14 @@
-import React from 'react'
+import MarqueeBanner from "./MarqueeBanner"
+import CryptoTopGainers from "./CryptoTopGainers"
+import CryptoCTA from "./CryptoCTA"
 
 const FinDashboard = () => {
   return (
-    <div>FinDashboard</div>
+    <div> 
+      <MarqueeBanner />
+      <CryptoCTA />
+      <CryptoTopGainers />
+    </div>
   )
 }
 

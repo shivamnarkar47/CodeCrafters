@@ -5,7 +5,7 @@ import { ShimmerButtonDemo } from "../utilities/ShimmerButton";
 
 const Home = () => {
   return (
-    <>
+    <div className="overflow-x-hidden relative h-[100vh] w-full">
     <HeroHighlight>
       <motion.h1
         initial={{
@@ -34,7 +34,9 @@ const Home = () => {
         </a>
       </div>
     </HeroHighlight>
-    </>
+    <img  src="/Sidelogo.png" className="absolute z-10 h-[100vh] -right-40 top-0"/>
+    <img  src="/Sidelogo.png" className="absolute z-10 h-[100vh] -left-40 top-0"/>
+    </div>
   )
 }
 

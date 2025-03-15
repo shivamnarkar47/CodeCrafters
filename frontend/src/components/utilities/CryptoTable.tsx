@@ -8,6 +8,7 @@ import {
     TableHeader,
     TableRow,
   } from "../ui/table";
+import { useNavigate } from 'react-router-dom';
 
 
 const CryptoTable = () => {
@@ -25,7 +26,7 @@ const CryptoTable = () => {
         }
         , [])
     
-
+        const navigate = useNavigate();
     return (
       <div className="bg-background">
         <Table>
@@ -41,7 +42,7 @@ const CryptoTable = () => {
           <TableBody>
             {cryptoData.map((crypto:any, index:any)  => (
               <TableRow key={index} className='hover:cursor-pointer'>
-                <TableCell>
+                <TableCell onClick={()=>navigate(`/dashboard/explore/crypto/${crypto.id}`)}>
                   <div className="flex items-center gap-3">
                     <img
                       className="rounded-full"
