@@ -60,3 +60,24 @@ class UserSerializer(serializers.ModelSerializer):
     'age', 'gender', 'dob', 'address', 'bank_name', 'bank_acc_no', 'pan_no', 
     'trading_acc_no', 'dp_name', 'depository_name', 'dp_id', 'dp_acc_no', 'poa'
 ]
+        
+class StockTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StockTransaction
+        fields = [
+            'transaction_id', 'stock_symbol', 'stock_name', 'transaction_type',
+            'quantity', 'price_per_share', 'total_amount', 'status',
+            'order_date', 'execution_date', 'brokerage_fee', 'taxes', 'other_charges'
+        ]
+
+class StockPositionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StockPosition
+        fields = ['stock_symbol', 'stock_name', 'quantity', 'average_price']
+
+class PortfolioSerializer(serializers.ModelSerializer):
+    positions = StockPositionSerializer(many=True, read_only=True, source='user.stock_positions')
+    
+    class Meta:
+        model = Portfolio
+        fields = ['beta', 'total_value', 'last_updated', 'positions']
