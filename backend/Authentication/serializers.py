@@ -163,3 +163,8 @@ class MarketPriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = MarketPrice
         fields = '__all__'
+
+class TransactionSerailzer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
+        fields = ["payment_id", "order_id", "signature", "amount"]
