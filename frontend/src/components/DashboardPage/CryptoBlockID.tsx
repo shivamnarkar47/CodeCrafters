@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaMoneyBillWave, FaChartLine, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import { request } from '@/lib/axiosRequest';
 
 const formatCurrency = (value:any) => {
     if (!value) return 'N/A';
@@ -28,6 +29,16 @@ const CryptoBlockID = () => {
         fetchCryptoData();
     }, [id]);
 
+    const postWatchList = () =>{
+      request({
+        url:"favorite",
+        method:"POST",
+        data:{
+        //   stock_symbol:
+        }
+      })
+    }
+
     if (!cryptoData) return <p className="text-center text-gray-600">Loading...</p>;
 
     return (
@@ -35,7 +46,7 @@ const CryptoBlockID = () => {
             <div className="container px-5 pt-12 pb-24 mx-auto">
                 <div className="flex flex-col justify-between text-center w-full mb-10 ">
                     <div className="flex justify-between items-center px-16 pb-6">
-                        <div className="flex items-center gap-2 text-center "> 
+                        <div className="flex items-center gap-2 text-center ">
                             <img src={cryptoData.image?.large} className='w-10' alt="" />
                             <h1 className="text-3xl font-bold text-gray-900">{cryptoData.name}</h1>
                         </div>

@@ -18,6 +18,11 @@ import SignUp from "./components/AuthPage/SignUp"
 import CryptoBlock from "./components/DashboardPage/CryptoBlock"
 import CryptoBlockID from "./components/DashboardPage/CryptoBlockID"
 
+import { Navigate, Outlet } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute"
+
+
+
 
 function App() {
   return (
@@ -31,20 +36,21 @@ function App() {
 
             <Routes>
               <Route path="/" element={<Home />} index />
-              <Route path="/dashboard" element={<SideBar />}>
-                <Route index element={<FinDashboard />} />
-                <Route path="explore" >
-                  <Route path="stocks" element={<StocksBlock />} />
-                  <Route path="crypto" >
-                    <Route index element={<CryptoBlock />} />
-                    <Route path=":id" element={<CryptoBlockID />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/dashboard" element={<SideBar />}>
+                  <Route index element={<FinDashboard />} />
+                  <Route path="explore" >
+                    <Route path="stocks" element={<StocksBlock />} />
+                    <Route path="crypto" >
+                      <Route index element={<CryptoBlock />} />
+                      <Route path=":id" element={<CryptoBlockID />} />
+                    </Route>
+                    <Route path="bonds" element={<BondsBlock />} />
+                    <Route path="insurance" element={<InsuranceBlock />} />
                   </Route>
-                  <Route path="bonds" element={<BondsBlock />} />
-                  <Route path="insurance" element={<InsuranceBlock />} />
+                  <Route path="watchlist" element={<WatchList />} />
+                  <Route path="investments" element={<Investments />} />
                 </Route>
-                <Route path="watchlist" element={<WatchList />} />
-                <Route path="investments" element={<Investments />} />
-
 
 
               </Route>
