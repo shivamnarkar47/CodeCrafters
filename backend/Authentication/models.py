@@ -156,8 +156,6 @@ class Portfolio(models.Model):
 
 
 class StockPosition(models.Model):
-    """Model to track individual stock positions"""
-
     user = models.ForeignKey(
         "User", on_delete=models.CASCADE, related_name="stock_positions"
     )
@@ -207,8 +205,6 @@ class StockPosition(models.Model):
 
 
 class StockTransaction(models.Model):
-    """Model to store stock transaction details with portfolio beta updates"""
-
     TRANSACTION_TYPES = (
         ("BUY", "Buy"),
         ("SELL", "Sell"),
