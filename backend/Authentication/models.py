@@ -209,7 +209,6 @@ class Favorite(models.Model):
     exchange = models.CharField(max_length=255, blank=True, null=True)
     high_24h = models.IntegerField(default=0, null=True, blank=True)
     low_24h = models.IntegerField(default=0, null=True, blank=True)
-    # stock_symbol, stock_name, exchange, high_24h, low_24h
     added_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -346,11 +345,11 @@ class MarketPrice(models.Model):
     sell_price = models.DecimalField(max_digits=12, decimal_places=2)
     benchmark_name = models.CharField(max_length=50, null=True, blank=True)
     timestamp = models.DateTimeField(default=timezone.now)
-    
+
     class Meta:
         indexes = [
             models.Index(fields=['symbol', 'timestamp']),
         ]
-        
+
     def __str__(self):
         return f"{self.symbol} - {self.current_price} ({self.timestamp})"

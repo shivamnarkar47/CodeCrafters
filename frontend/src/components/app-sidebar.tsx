@@ -33,83 +33,86 @@ import {
 } from "@/components/ui/sidebar"
 import { ModeToggle } from "./mode-toggle"
 import { Link } from "react-router-dom"
+import { useUserContext } from "@/context/ContextProvider"
 
-const data = {
-  user: {
-    name: "Dhruv Bhatada",
-    email: "bhatadadhruv@gmail.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Explore",
-      url: "#",
-      icon: Compass,
-      isActive: true,
-      items: [
-        {
-          title: "Stocks",
-          url: "/dashboard/explore/stocks",
-        },
-        {
-          title: "Bonds",
-          url: "/dashboard/explore/bonds",
-        },
-        {
-          title: "Crypto",
-          url: "/dashboard/explore/crypto",
-        },
-        {
-          title: "Insurance",
-          url: "/dashboard/explore/insurance",
-        },
-      ],
-    },
-    {
-      title: "WatchList",
-      url: "/dashboard/watchlist",
-      icon: Clock,
-      
-    },
-    {
-      title: "Investments",
-      url: "/dashboard/investments",
-      icon: ChartCandlestick ,
-      
-    },
-  ],
-  navSecondary: [
-    // {
-    //   title: "Support",
-    //   url: "#",
-    //   icon: LifeBuoy,
-    // },
-    // {
-    //   title: "Light/Dark Mode",
-    //   url: "#",
-    //   icon: Moon,
-    // },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
-}
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const {user} = useUserContext()
+  const data = {
+    userData: {
+      name: `${user.first_name}`,
+      email: `${user.email}`,
+      avatar: `https://api.dicebear.com/9.x/identicon/svg?seed=${user.first_name}`
+    },
+    navMain: [
+      {
+        title: "Explore",
+        url: "#",
+        icon: Compass,
+        isActive: true,
+        items: [
+          {
+            title: "Stocks",
+            url: "/dashboard/explore/stocks",
+          },
+          {
+            title: "Bonds",
+            url: "/dashboard/explore/bonds",
+          },
+          {
+            title: "Crypto",
+            url: "/dashboard/explore/crypto",
+          },
+          {
+            title: "Insurance",
+            url: "/dashboard/explore/insurance",
+          },
+        ],
+      },
+      {
+        title: "WatchList",
+        url: "/dashboard/watchlist",
+        icon: Clock,
+        
+      },
+      {
+        title: "Investments",
+        url: "/dashboard/investments",
+        icon: ChartCandlestick ,
+        
+      },
+    ],
+    navSecondary: [
+      // {
+      //   title: "Support",
+      //   url: "#",
+      //   icon: LifeBuoy,
+      // },
+      // {
+      //   title: "Light/Dark Mode",
+      //   url: "#",
+      //   icon: Moon,
+      // },
+    ],
+    projects: [
+      {
+        name: "Design Engineering",
+        url: "#",
+        icon: Frame,
+      },
+      {
+        name: "Sales & Marketing",
+        url: "#",
+        icon: PieChart,
+      },
+      {
+        name: "Travel",
+        url: "#",
+        icon: Map,
+      },
+    ],
+  }
+  
   return (
     <Sidebar
       className="md:h-full h-[80vh] pt-10"
@@ -138,7 +141,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={data.userData} />
       </SidebarFooter>
     </Sidebar>
   )

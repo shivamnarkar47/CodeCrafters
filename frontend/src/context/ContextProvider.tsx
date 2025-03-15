@@ -4,20 +4,17 @@ import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type UserProps = {
-  username: string;
+  
   email: string;
-  userid: number;
-  is_superuser: boolean;
+  first_name: string;
+  last_name: string;
+  phone: string;
   address: string;
   city: string;
   latitude: string;
   longitude: string;
 } | null;
 
-type LoginProps = {
-  email: string;
-  password: string;
-};
 
 const User = createContext({
   user: null,
@@ -27,46 +24,47 @@ const User = createContext({
   orders: [],
 } as {
   user: UserProps;
-  login: (user: LoginProps) => void;
+  login: () => void;
   logout: () => void;
 });
 
 export { User };
 
+export function resetAllTokens() {
+  axios.defaults.headers.common["Authorization"] = null;
+  localStorage.removeItem("access");
+  localStorage.removeItem("refresh");
+}
+
+export function setAccessToken(token: string) {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  localStorage.setItem("access", token);
+}
+
+export  function setRefreshToken(token: string) {
+  localStorage.setItem("refresh", token);
+}
+
+
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProps>(null);
   const navigate = useNavigate();
-  async function login(values: LoginProps) {
+  async function login() {
     await request({
-      method: "POST",
-      url: "login",
-      data: values,
+      method: "GET",
+      url: "profile",
+
       headers: { "Content-Type": "application/json" },
     })
       .then((response: any) => {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
-        localStorage.setItem("access_token", response.data.access);
-        localStorage.setItem("refresh_token", response.data.refresh);
-        axios.defaults.headers.common["Authorization"] =
-          `Bearer ${response.data.access}`;
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-
-    await request({
-      method: "GET",
-      url: "user",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => {
-        setUser(response.data);
+       setUser(response.data);
         navigate("/dashboard");
       })
       .catch((error) => {
         console.log(error.message);
       });
+
+    
   }
 
   function logout() {
