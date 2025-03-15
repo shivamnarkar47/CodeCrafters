@@ -12,6 +12,7 @@ urlpatterns = [
     path("portfolio/", PortfolioAPIView.as_view(), name="get-portfolio"),
     path("favorites/", FavoriteListCreateView.as_view(), name="favorites"),
     path("get_transactions/", get_transactions, name="get-transactions"),
+    path("upi/", UPIintegration, name="UPIintegration"),
     path('api/grid-trading/bot/', GridTradingBotAPIView.as_view(), name='grid-trading-bot'),
     path('api/grid-trading/bot/<str:stock_symbol>/', GridTradingBotDetailAPIView.as_view(), name='grid-trading-bot-detail'),
 ]

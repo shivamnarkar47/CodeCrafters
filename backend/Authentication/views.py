@@ -764,3 +764,26 @@ class MarketPriceAPIView(APIView):
                     
             return Response(latest_prices)
 
+@api_view(["POST"])
+def UPIintegration(request):
+    try:
+        transaction_serializer = TransactionSerailzer(data=request.data)
+        if transaction_serializer.is_valid():
+            rz_client.verify_payment(
+                payment_id=transaction_serializer.validated_data["payment_id"],
+                order_id=transaction_serializer.validated_data["order_id"],
+                signature=transaction_serializer.validated_data["signature"],
+            )
+            transaction_serializer.save()
+            response = {
+                "status_code": status.HTTP_201_CREATED,
+                "message": "Transaction Created Successfully",
+                "data": transaction_serializer.data,
+            }
+            return Response(response, status=status.HTTP_201_CREATED)
+        else:
+            return Response(
+                transaction_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+            )
+    except Exception as e:
+        return Response(e, status=status.HTTP_400_BAD_REQUEST)
