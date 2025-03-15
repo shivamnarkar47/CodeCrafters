@@ -2,7 +2,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Home from "./components/HomePage/Home"
 import Investments from "./components/InvestmentPage/Investments"
-import Signup from "./components/AuthPage/Signup"
 import Navbar from "./components/utilities/Navbar"
 import { UserProvider } from "./context/ContextProvider"
 // import Dashboard from "./components/DashboardPage/SideBar"
@@ -14,6 +13,8 @@ import StocksBlock from "./components/DashboardPage/StocksBlock"
 import BondsBlock from "./components/DashboardPage/BondsBlock"
 import InsuranceBlock from "./components/DashboardPage/InsuranceBlock"
 import WatchList from "./components/DashboardPage/WatchList"
+import SignIn from "./components/AuthPage/SignIn"
+import SignUp from "./components/AuthPage/SignUp"
 
 
 function App() {
@@ -42,7 +43,11 @@ function App() {
 
               </Route>
 
-              <Route path="/auth" element={<Signup />} />
+              <Route path="/auth" >
+              <Route index  element={<SignIn />} />
+              <Route path="signup" element={<SignUp />} />
+              </Route>
+
             </Routes>
           </UserProvider>
 
