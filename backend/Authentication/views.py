@@ -717,13 +717,25 @@ class FavoriteListCreateView(APIView):
 
     def post(self, request):
         stock_symbol = request.data.get("stock_symbol")
+        stock_name = request.data.get("stock_name", "")
+        exchange = request.data.get("exchange", "")
+        high_24h = request.data.get("high_24h", None)
+        low_24h = request.data.get("low_24h", None)
+
         if not stock_symbol:
             return Response({"error": "Stock symbol is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        stock = get_object_or_404(StockPosition, stock_symbol=stock_symbol, user=request.user)
-
         # Ensure stock is not already favorited
-        favorite, created = Favorite.objects.get_or_create(user=request.user, stock=stock)
+        favorite, created = Favorite.objects.get_or_create(
+            user=request.user,
+            stock_symbol=stock_symbol,
+            defaults={
+                "stock_name": stock_name,
+                "exchange": exchange,
+                "high_24h": high_24h,
+                "low_24h": low_24h,
+            }
+        )
 
         if not created:
             return Response({"message": "Stock is already in favorites."}, status=status.HTTP_400_BAD_REQUEST)

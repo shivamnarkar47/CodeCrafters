@@ -148,12 +148,16 @@ class StockTransactionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class FavoriteSerializer(serializers.ModelSerializer):
-    stock_symbol = serializers.CharField(source="stock.stock_symbol", read_only=True)
-    stock_name = serializers.CharField(source="stock.stock_name", read_only=True)
+    stock_symbol = serializers.CharField(read_only=True)
+    stock_name = serializers.CharField(read_only=True)
+    exchange = serializers.CharField(read_only=True)
+    high_24h = serializers.IntegerField(read_only=True)
+    low_24h = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Favorite
-        fields = ["id", "stock_symbol", "stock_name", "added_on"]
+        fields = ["id", "stock_symbol", "stock_name", "exchange", "high_24h", "low_24h", "added_on"]
+
 
 class MarketPriceSerializer(serializers.ModelSerializer):
     class Meta:
