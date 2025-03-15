@@ -8,7 +8,7 @@ export default function SignUp() {
   const [reset, setReset] = React.useState(false);
   const navigate = useNavigate();
   return (
-    <main className="w-full min-h-screen flex overflow-y-hidden bg-black">
+    <main className="w-full min-h-screen flex overflow-y-hidden bg-white">
       <div className="relative flex-1 hidden items-center justify-center min-h-screen bg-transparent lg:flex">
         <div className="relative z-10 w-full max-w-lg">
           <img
@@ -17,34 +17,34 @@ export default function SignUp() {
             className="rounded-full"
           />
           <div className=" mt-10 space-y-3">
-            <h3 className="text-white text-3xl md:text-4xl lg:text-5xl font-normal font-geist tracking-tighter">
+            <h3 className="text-black text-3xl md:text-4xl lg:text-5xl font-normal font-geist tracking-tighter">
               Start growing your portfolio already.
             </h3>
 
-            <Separator className="h-px bg-white/20 w-[100px] mr-auto" />
+            <Separator className="h-px bg-black/20 w-[100px] mr-auto" />
             <p className="text-gray-300 text-md md:text-xl font-geist tracking-tight">
               Create an account and enjoy your investments
             </p>
             <div className="flex items-center -space-x-2 overflow-hidden">
               <img
                 src="https://randomuser.me/api/portraits/women/79.jpg"
-                className="w-10 h-10 rounded-full border-2 border-white"
+                className="w-10 h-10 rounded-full border-2 border-black"
               />
               <img
                 src="https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg"
-                className="w-10 h-10 rounded-full border-2 border-white"
+                className="w-10 h-10 rounded-full border-2 border-black"
               />
               <img
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=a72ca28288878f8404a795f39642a46f"
-                className="w-10 h-10 rounded-full border-2 border-white"
+                className="w-10 h-10 rounded-full border-2 border-black"
               />
               <img
                 src="https://randomuser.me/api/portraits/men/86.jpg"
-                className="w-10 h-10 rounded-full border-2 border-white"
+                className="w-10 h-10 rounded-full border-2 border-black"
               />
               <img
                 src="https://images.unsplash.com/photo-1510227272981-87123e259b17?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=3759e09a5b9fbe53088b23c615b6312e"
-                className="w-10 h-10 rounded-full border-2 border-white"
+                className="w-10 h-10 rounded-full border-2 border-black"
               />
               <p className="text-sm text-gray-400 font-medium translate-x-5">
                 Join 5.000+ users
@@ -60,7 +60,7 @@ export default function SignUp() {
             }
           }
         >
-          <div className="absolute  inset-0 opacity-15  w-full w-full bg-transparent  bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
+          <div className="absolute  inset-0 opacity-15  w-full bg-transparent  bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
           <img
             className="absolute inset-x-0 -top-20 opacity-25 "
             src={
@@ -90,7 +90,7 @@ export default function SignUp() {
               className="lg:hidden rounded-full"
             />
             <div className="mt-5 space-y-2">
-              <h3 className="text-gray-200 text-3xl  font-semibold tracking-tighter sm:text-4xl">
+              <h3 className="text-black text-3xl  font-semibold tracking-tighter sm:text-4xl">
                 Sign up - Start journey
               </h3>
               <p className="text-gray-400">
@@ -107,33 +107,33 @@ export default function SignUp() {
          
           <form onSubmit={(e) => {e.preventDefault();navigate("/dashboard")}} className="space-y-5 z-20">
             <div>
-              <label className="font-medium text-gray-100/50 font-geist">
+              <label className="font-medium text-black font-geist">
                 Name
               </label>
               <Input
                 type="text"
                 required
-                className="w-full mt-2 px-3 py-5 text-gray-500 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+                className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
               />
             </div>
             <div>
-              <label className="font-medium text-gray-100/50 font-geist">
+              <label className="font-medium text-black font-geist">
                 Email
               </label>
               <Input
                 type="email"
                 required
-                className="w-full mt-2 px-3 py-5 text-gray-500 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+                className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
               />
             </div>
             <div>
-              <label className="font-medium text-gray-100/50 font-geist">
+              <label className="font-medium text-black font-geist">
                 Password
               </label>
               <Input
                 type="password"
                 required
-                className="w-full mt-2 px-3 py-5 text-gray-500 bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+                className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
               />
             </div>
             <button className="w-full font-geist tracking-tighter text-center rounded-md bg-gradient-to-br from-blue-400 to-blue-700 px-4 py-2 text-lg text-zinc-50 ring-2 ring-blue-500/50 ring-offset-2 ring-offset-zinc-950 transition-all hover:scale-[1.02] hover:ring-transparent active:scale-[0.98] active:ring-blue-500/70 flex items-center justify-center gap-2">
