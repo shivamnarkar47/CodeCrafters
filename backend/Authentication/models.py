@@ -204,15 +204,20 @@ class StockPosition(models.Model):
 
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="favorites")
-    stock = models.ForeignKey(StockPosition, on_delete=models.CASCADE, related_name="favorited_by")
+    stock_symbol = models.CharField(max_length=255, blank=True, null=True)
+    stock_name = models.CharField(max_length=255, blank=True, null=True)
+    exchange = models.CharField(max_length=255, blank=True, null=True)
+    high_24h = models.IntegerField(default=0, null=True, blank=True)
+    low_24h = models.IntegerField(default=0, null=True, blank=True)
+    # stock_symbol, stock_name, exchange, high_24h, low_24h
     added_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.email} - {self.stock.stock_symbol}"
+        return f"{self.user.email} - {self.stock_symbol}"
 
     class Meta:
         db_table = "Favorite"
-        unique_together = ("user", "stock")
+        # unique_together = ("user", "stock_symbol")
 
 
 class StockTransaction(models.Model):
