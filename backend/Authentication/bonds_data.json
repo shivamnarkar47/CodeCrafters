@@ -1,0 +1,704 @@
+{
+  "bonds": [
+    {
+      "id": 1,
+      "type": "Treasury Bond",
+      "price": 4082.49,
+      "interest_rate": 2.67,
+      "maturity_years": 1
+    },
+    {
+      "id": 2,
+      "type": "Treasury Bond",
+      "price": 2683.34,
+      "interest_rate": 3.97,
+      "maturity_years": 14
+    },
+    {
+      "id": 3,
+      "type": "Fixed-Rate Bond",
+      "price": 9530.39,
+      "interest_rate": 4.95,
+      "maturity_years": 2
+    },
+    {
+      "id": 4,
+      "type": "Treasury Bond",
+      "price": 9975.72,
+      "interest_rate": 2.67,
+      "maturity_years": 16
+    },
+    {
+      "id": 5,
+      "type": "Inflation-Protected Bond",
+      "price": 6634.98,
+      "interest_rate": 7.62,
+      "maturity_years": 4
+    },
+    {
+      "id": 6,
+      "type": "Government Bond",
+      "price": 7939.94,
+      "interest_rate": 9.96,
+      "maturity_years": 9
+    },
+    {
+      "id": 7,
+      "type": "Municipal Bond",
+      "price": 9536.74,
+      "interest_rate": 2.26,
+      "maturity_years": 29
+    },
+    {
+      "id": 8,
+      "type": "Municipal Bond",
+      "price": 1353.98,
+      "interest_rate": 2.69,
+      "maturity_years": 2
+    },
+    {
+      "id": 9,
+      "type": "Corporate Bond",
+      "price": 1237.35,
+      "interest_rate": 7.85,
+      "maturity_years": 29
+    },
+    {
+      "id": 10,
+      "type": "Zero-Coupon Bond",
+      "price": 3757.21,
+      "interest_rate": 3.06,
+      "maturity_years": 7
+    },
+    {
+      "id": 11,
+      "type": "Government Bond",
+      "price": 8331.18,
+      "interest_rate": 9.06,
+      "maturity_years": 29
+    },
+    {
+      "id": 12,
+      "type": "Convertible Bond",
+      "price": 8846.74,
+      "interest_rate": 7.73,
+      "maturity_years": 15
+    },
+    {
+      "id": 13,
+      "type": "Convertible Bond",
+      "price": 2726.71,
+      "interest_rate": 4.75,
+      "maturity_years": 13
+    },
+    {
+      "id": 14,
+      "type": "Corporate Bond",
+      "price": 1154.48,
+      "interest_rate": 6.48,
+      "maturity_years": 8
+    },
+    {
+      "id": 15,
+      "type": "Treasury Bond",
+      "price": 3660.76,
+      "interest_rate": 4.24,
+      "maturity_years": 12
+    },
+    {
+      "id": 16,
+      "type": "High-Yield Bond",
+      "price": 8260.39,
+      "interest_rate": 5.88,
+      "maturity_years": 6
+    },
+    {
+      "id": 17,
+      "type": "Convertible Bond",
+      "price": 2233.7,
+      "interest_rate": 5.43,
+      "maturity_years": 12
+    },
+    {
+      "id": 18,
+      "type": "Fixed-Rate Bond",
+      "price": 7257.05,
+      "interest_rate": 4.83,
+      "maturity_years": 7
+    },
+    {
+      "id": 19,
+      "type": "Municipal Bond",
+      "price": 8704.44,
+      "interest_rate": 7.62,
+      "maturity_years": 28
+    },
+    {
+      "id": 20,
+      "type": "Treasury Bond",
+      "price": 9175.78,
+      "interest_rate": 9.63,
+      "maturity_years": 21
+    },
+    {
+      "id": 21,
+      "type": "Municipal Bond",
+      "price": 1509.36,
+      "interest_rate": 6.93,
+      "maturity_years": 14
+    },
+    {
+      "id": 22,
+      "type": "Convertible Bond",
+      "price": 4199.61,
+      "interest_rate": 6.65,
+      "maturity_years": 10
+    },
+    {
+      "id": 23,
+      "type": "High-Yield Bond",
+      "price": 7558.37,
+      "interest_rate": 9.87,
+      "maturity_years": 8
+    },
+    {
+      "id": 24,
+      "type": "High-Yield Bond",
+      "price": 4942.58,
+      "interest_rate": 5.87,
+      "maturity_years": 20
+    },
+    {
+      "id": 25,
+      "type": "High-Yield Bond",
+      "price": 6588.78,
+      "interest_rate": 2.06,
+      "maturity_years": 26
+    },
+    {
+      "id": 26,
+      "type": "High-Yield Bond",
+      "price": 8226.1,
+      "interest_rate": 4.51,
+      "maturity_years": 21
+    },
+    {
+      "id": 27,
+      "type": "Government Bond",
+      "price": 9143.77,
+      "interest_rate": 7.48,
+      "maturity_years": 24
+    },
+    {
+      "id": 28,
+      "type": "High-Yield Bond",
+      "price": 2538.46,
+      "interest_rate": 6.75,
+      "maturity_years": 13
+    },
+    {
+      "id": 29,
+      "type": "Treasury Bond",
+      "price": 2765.21,
+      "interest_rate": 7.68,
+      "maturity_years": 20
+    },
+    {
+      "id": 30,
+      "type": "Corporate Bond",
+      "price": 8710.13,
+      "interest_rate": 8.44,
+      "maturity_years": 24
+    },
+    {
+      "id": 31,
+      "type": "Government Bond",
+      "price": 9217.09,
+      "interest_rate": 5.5,
+      "maturity_years": 28
+    },
+    {
+      "id": 32,
+      "type": "Corporate Bond",
+      "price": 5555.02,
+      "interest_rate": 5.59,
+      "maturity_years": 14
+    },
+    {
+      "id": 33,
+      "type": "Zero-Coupon Bond",
+      "price": 1818.53,
+      "interest_rate": 3.21,
+      "maturity_years": 20
+    },
+    {
+      "id": 34,
+      "type": "Convertible Bond",
+      "price": 7996.07,
+      "interest_rate": 4.63,
+      "maturity_years": 10
+    },
+    {
+      "id": 35,
+      "type": "Municipal Bond",
+      "price": 1138.21,
+      "interest_rate": 8.52,
+      "maturity_years": 17
+    },
+    {
+      "id": 36,
+      "type": "Junk Bond",
+      "price": 8035.14,
+      "interest_rate": 6.42,
+      "maturity_years": 30
+    },
+    {
+      "id": 37,
+      "type": "High-Yield Bond",
+      "price": 8082.01,
+      "interest_rate": 9.71,
+      "maturity_years": 9
+    },
+    {
+      "id": 38,
+      "type": "Zero-Coupon Bond",
+      "price": 5634.68,
+      "interest_rate": 7.61,
+      "maturity_years": 16
+    },
+    {
+      "id": 39,
+      "type": "Corporate Bond",
+      "price": 3034.92,
+      "interest_rate": 5.04,
+      "maturity_years": 8
+    },
+    {
+      "id": 40,
+      "type": "Junk Bond",
+      "price": 4215.61,
+      "interest_rate": 9.42,
+      "maturity_years": 8
+    },
+    {
+      "id": 41,
+      "type": "Treasury Bond",
+      "price": 3031.34,
+      "interest_rate": 6.77,
+      "maturity_years": 28
+    },
+    {
+      "id": 42,
+      "type": "Government Bond",
+      "price": 4490.53,
+      "interest_rate": 6.92,
+      "maturity_years": 15
+    },
+    {
+      "id": 43,
+      "type": "Junk Bond",
+      "price": 4833.1,
+      "interest_rate": 5.0,
+      "maturity_years": 4
+    },
+    {
+      "id": 44,
+      "type": "Government Bond",
+      "price": 6068.81,
+      "interest_rate": 8.44,
+      "maturity_years": 2
+    },
+    {
+      "id": 45,
+      "type": "Junk Bond",
+      "price": 7600.81,
+      "interest_rate": 3.01,
+      "maturity_years": 29
+    },
+    {
+      "id": 46,
+      "type": "Convertible Bond",
+      "price": 9787.85,
+      "interest_rate": 2.01,
+      "maturity_years": 16
+    },
+    {
+      "id": 47,
+      "type": "Fixed-Rate Bond",
+      "price": 7059.86,
+      "interest_rate": 2.68,
+      "maturity_years": 18
+    },
+    {
+      "id": 48,
+      "type": "Convertible Bond",
+      "price": 3949.8,
+      "interest_rate": 8.52,
+      "maturity_years": 25
+    },
+    {
+      "id": 49,
+      "type": "Treasury Bond",
+      "price": 4840.69,
+      "interest_rate": 2.54,
+      "maturity_years": 10
+    },
+    {
+      "id": 50,
+      "type": "Zero-Coupon Bond",
+      "price": 5938.42,
+      "interest_rate": 3.74,
+      "maturity_years": 24
+    },
+    {
+      "id": 51,
+      "type": "Convertible Bond",
+      "price": 6457.0,
+      "interest_rate": 2.45,
+      "maturity_years": 4
+    },
+    {
+      "id": 52,
+      "type": "Inflation-Protected Bond",
+      "price": 5680.13,
+      "interest_rate": 9.48,
+      "maturity_years": 13
+    },
+    {
+      "id": 53,
+      "type": "High-Yield Bond",
+      "price": 5816.09,
+      "interest_rate": 4.46,
+      "maturity_years": 7
+    },
+    {
+      "id": 54,
+      "type": "Government Bond",
+      "price": 9087.92,
+      "interest_rate": 4.14,
+      "maturity_years": 26
+    },
+    {
+      "id": 55,
+      "type": "Junk Bond",
+      "price": 7459.48,
+      "interest_rate": 6.86,
+      "maturity_years": 24
+    },
+    {
+      "id": 56,
+      "type": "High-Yield Bond",
+      "price": 8965.16,
+      "interest_rate": 5.99,
+      "maturity_years": 29
+    },
+    {
+      "id": 57,
+      "type": "Zero-Coupon Bond",
+      "price": 6635.67,
+      "interest_rate": 6.11,
+      "maturity_years": 11
+    },
+    {
+      "id": 58,
+      "type": "Municipal Bond",
+      "price": 2298.48,
+      "interest_rate": 5.83,
+      "maturity_years": 24
+    },
+    {
+      "id": 59,
+      "type": "Junk Bond",
+      "price": 8917.01,
+      "interest_rate": 5.69,
+      "maturity_years": 14
+    },
+    {
+      "id": 60,
+      "type": "Fixed-Rate Bond",
+      "price": 3116.64,
+      "interest_rate": 3.72,
+      "maturity_years": 1
+    },
+    {
+      "id": 61,
+      "type": "Corporate Bond",
+      "price": 4304.35,
+      "interest_rate": 7.76,
+      "maturity_years": 8
+    },
+    {
+      "id": 62,
+      "type": "High-Yield Bond",
+      "price": 6631.51,
+      "interest_rate": 9.14,
+      "maturity_years": 20
+    },
+    {
+      "id": 63,
+      "type": "Fixed-Rate Bond",
+      "price": 1915.97,
+      "interest_rate": 9.53,
+      "maturity_years": 18
+    },
+    {
+      "id": 64,
+      "type": "High-Yield Bond",
+      "price": 4768.62,
+      "interest_rate": 6.65,
+      "maturity_years": 21
+    },
+    {
+      "id": 65,
+      "type": "Government Bond",
+      "price": 6412.14,
+      "interest_rate": 9.14,
+      "maturity_years": 16
+    },
+    {
+      "id": 66,
+      "type": "High-Yield Bond",
+      "price": 1343.46,
+      "interest_rate": 8.7,
+      "maturity_years": 3
+    },
+    {
+      "id": 67,
+      "type": "Junk Bond",
+      "price": 4578.1,
+      "interest_rate": 3.23,
+      "maturity_years": 7
+    },
+    {
+      "id": 68,
+      "type": "Inflation-Protected Bond",
+      "price": 3002.87,
+      "interest_rate": 6.13,
+      "maturity_years": 19
+    },
+    {
+      "id": 69,
+      "type": "Convertible Bond",
+      "price": 6824.26,
+      "interest_rate": 8.02,
+      "maturity_years": 6
+    },
+    {
+      "id": 70,
+      "type": "Inflation-Protected Bond",
+      "price": 4737.47,
+      "interest_rate": 2.79,
+      "maturity_years": 19
+    },
+    {
+      "id": 71,
+      "type": "Government Bond",
+      "price": 3366.05,
+      "interest_rate": 6.53,
+      "maturity_years": 29
+    },
+    {
+      "id": 72,
+      "type": "High-Yield Bond",
+      "price": 3264.66,
+      "interest_rate": 6.2,
+      "maturity_years": 22
+    },
+    {
+      "id": 73,
+      "type": "Convertible Bond",
+      "price": 2068.6,
+      "interest_rate": 6.42,
+      "maturity_years": 26
+    },
+    {
+      "id": 74,
+      "type": "Fixed-Rate Bond",
+      "price": 9017.73,
+      "interest_rate": 4.5,
+      "maturity_years": 17
+    },
+    {
+      "id": 75,
+      "type": "Zero-Coupon Bond",
+      "price": 5114.79,
+      "interest_rate": 3.45,
+      "maturity_years": 20
+    },
+    {
+      "id": 76,
+      "type": "Fixed-Rate Bond",
+      "price": 8546.68,
+      "interest_rate": 5.24,
+      "maturity_years": 2
+    },
+    {
+      "id": 77,
+      "type": "Municipal Bond",
+      "price": 5374.1,
+      "interest_rate": 4.86,
+      "maturity_years": 14
+    },
+    {
+      "id": 78,
+      "type": "Corporate Bond",
+      "price": 2046.74,
+      "interest_rate": 8.31,
+      "maturity_years": 10
+    },
+    {
+      "id": 79,
+      "type": "High-Yield Bond",
+      "price": 9583.74,
+      "interest_rate": 8.31,
+      "maturity_years": 24
+    },
+    {
+      "id": 80,
+      "type": "Corporate Bond",
+      "price": 3290.73,
+      "interest_rate": 2.41,
+      "maturity_years": 29
+    },
+    {
+      "id": 81,
+      "type": "Fixed-Rate Bond",
+      "price": 2210.72,
+      "interest_rate": 8.34,
+      "maturity_years": 19
+    },
+    {
+      "id": 82,
+      "type": "Treasury Bond",
+      "price": 3710.99,
+      "interest_rate": 9.15,
+      "maturity_years": 27
+    },
+    {
+      "id": 83,
+      "type": "Convertible Bond",
+      "price": 3691.61,
+      "interest_rate": 9.9,
+      "maturity_years": 28
+    },
+    {
+      "id": 84,
+      "type": "Convertible Bond",
+      "price": 9364.14,
+      "interest_rate": 4.31,
+      "maturity_years": 18
+    },
+    {
+      "id": 85,
+      "type": "Government Bond",
+      "price": 8845.0,
+      "interest_rate": 5.23,
+      "maturity_years": 6
+    },
+    {
+      "id": 86,
+      "type": "Convertible Bond",
+      "price": 3308.16,
+      "interest_rate": 7.54,
+      "maturity_years": 27
+    },
+    {
+      "id": 87,
+      "type": "Municipal Bond",
+      "price": 7101.94,
+      "interest_rate": 2.6,
+      "maturity_years": 3
+    },
+    {
+      "id": 88,
+      "type": "Municipal Bond",
+      "price": 1497.27,
+      "interest_rate": 3.43,
+      "maturity_years": 2
+    },
+    {
+      "id": 89,
+      "type": "Convertible Bond",
+      "price": 4165.55,
+      "interest_rate": 8.54,
+      "maturity_years": 21
+    },
+    {
+      "id": 90,
+      "type": "High-Yield Bond",
+      "price": 9927.36,
+      "interest_rate": 9.91,
+      "maturity_years": 9
+    },
+    {
+      "id": 91,
+      "type": "Convertible Bond",
+      "price": 4106.71,
+      "interest_rate": 5.35,
+      "maturity_years": 30
+    },
+    {
+      "id": 92,
+      "type": "Junk Bond",
+      "price": 4912.67,
+      "interest_rate": 8.16,
+      "maturity_years": 20
+    },
+    {
+      "id": 93,
+      "type": "Municipal Bond",
+      "price": 8574.63,
+      "interest_rate": 8.49,
+      "maturity_years": 27
+    },
+    {
+      "id": 94,
+      "type": "Inflation-Protected Bond",
+      "price": 2773.18,
+      "interest_rate": 2.29,
+      "maturity_years": 26
+    },
+    {
+      "id": 95,
+      "type": "Convertible Bond",
+      "price": 7326.19,
+      "interest_rate": 8.43,
+      "maturity_years": 27
+    },
+    {
+      "id": 96,
+      "type": "Zero-Coupon Bond",
+      "price": 5372.27,
+      "interest_rate": 3.55,
+      "maturity_years": 24
+    },
+    {
+      "id": 97,
+      "type": "High-Yield Bond",
+      "price": 8363.27,
+      "interest_rate": 9.95,
+      "maturity_years": 21
+    },
+    {
+      "id": 98,
+      "type": "Treasury Bond",
+      "price": 3209.33,
+      "interest_rate": 7.73,
+      "maturity_years": 8
+    },
+    {
+      "id": 99,
+      "type": "Zero-Coupon Bond",
+      "price": 4705.72,
+      "interest_rate": 8.11,
+      "maturity_years": 4
+    },
+    {
+      "id": 100,
+      "type": "Government Bond",
+      "price": 6929.53,
+      "interest_rate": 8.59,
+      "maturity_years": 6
+    }
+  ]
+}

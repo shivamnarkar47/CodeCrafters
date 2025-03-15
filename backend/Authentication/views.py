@@ -403,17 +403,21 @@ class GridTradingAutobot:
         self.sell_orders = []
         
     def get_current_price(self):
-        import random
-        price_range = self.max_price - self.min_price
-        random_offset = Decimal(str(random.uniform(-0.1, 0.1))) * price_range
-        mock_price = self.min_price + (price_range / 2) + random_offset
-        
-        if mock_price < self.min_price:
-            mock_price = self.min_price
-        elif mock_price > self.max_price:
-            mock_price = self.max_price
+        try:
+            # Get the latest price from the database
+            latest_price = MarketPrice.objects.filter(
+                symbol=self.stock_symbol
+            ).order_by('-timestamp').first()
             
-        return mock_price
+            if latest_price:
+                return latest_price.current_price
+            else:
+                # Fallback to mock price if no data exists
+                return self._generate_mock_price()
+        except Exception as e:
+            print(f"Error fetching price: {str(e)}")
+            return self._generate_mock_price()
+
     
     def execute_buy(self, price):
         quantity = self.shares_per_grid
@@ -726,3 +730,25 @@ class FavoriteListCreateView(APIView):
 
         serializer = FavoriteSerializer(favorite)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class MarketPriceAPIView(APIView):
+    def get(self, request, symbol=None):
+        if symbol:
+            # Get latest price for a specific symbol
+            price = MarketPrice.objects.filter(symbol=symbol.upper()).order_by('-timestamp').first()
+            if price:
+                return Response(MarketPriceSerializer(price).data)
+            return Response({"error": "Symbol not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            # Get latest prices for all symbols
+            symbols = MarketPrice.objects.values('symbol').distinct()
+            latest_prices = []
+            
+            for item in symbols:
+                symbol = item['symbol']
+                price = MarketPrice.objects.filter(symbol=symbol).order_by('-timestamp').first()
+                if price:
+                    latest_prices.append(MarketPriceSerializer(price).data)
+                    
+            return Response(latest_prices)
+

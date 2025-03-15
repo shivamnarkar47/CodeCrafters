@@ -154,3 +154,8 @@ class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ["id", "stock_symbol", "stock_name", "added_on"]
+
+class MarketPriceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MarketPrice
+        fields = '__all__'

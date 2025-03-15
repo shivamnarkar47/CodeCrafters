@@ -131,6 +131,22 @@ from rest_framework_simplejwt.settings import api_settings
 api_settings.USER_ID_FIELD = "unique_id"  # Replace "unique_id" with the actual name of your UUID field in the User model
 api_settings.USER_ID_CLAIM = "user_id"
 
+# settings.py
+from celery.schedules import schedule
+
+CELERY_BEAT_SCHEDULE = {
+    'update-market-prices': {
+        'task': 'Authentication.tasks.update_market_prices',
+        'schedule': 5.0, 
+    },
+}
+# settings.py
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
 # CORS Configuration
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_METHODS = [
@@ -170,7 +186,7 @@ REST_FRAMEWORK = {
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=500),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5000),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": True,

@@ -318,3 +318,23 @@ class StockTransaction(models.Model):
     class Meta:
         db_table = "StockTransaction"
         ordering = ["-order_date"]
+
+class MarketPrice(models.Model):
+    symbol = models.CharField(max_length=20, db_index=True)
+    current_price = models.DecimalField(max_digits=12, decimal_places=2)
+    open_price = models.DecimalField(max_digits=12, decimal_places=2)
+    day_high = models.DecimalField(max_digits=12, decimal_places=2)
+    day_low = models.DecimalField(max_digits=12, decimal_places=2)
+    close_price = models.DecimalField(max_digits=12, decimal_places=2)
+    buy_price = models.DecimalField(max_digits=12, decimal_places=2)
+    sell_price = models.DecimalField(max_digits=12, decimal_places=2)
+    benchmark_name = models.CharField(max_length=50, null=True, blank=True)
+    timestamp = models.DateTimeField(default=timezone.now)
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['symbol', 'timestamp']),
+        ]
+        
+    def __str__(self):
+        return f"{self.symbol} - {self.current_price} ({self.timestamp})"
