@@ -15,7 +15,7 @@ type UserProps = {
 } | null;
 
 type LoginProps = {
-  username: string;
+  email: string;
   password: string;
 };
 
@@ -25,7 +25,11 @@ const User = createContext({
   logout: () => {},
   setOrdersData: () => {},
   orders: [],
-} as { user: UserProps; login: (user: LoginProps) => void; logout: () => void});
+} as {
+  user: UserProps;
+  login: (user: LoginProps) => void;
+  logout: () => void;
+});
 
 export { User };
 
@@ -35,18 +39,17 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   async function login(values: LoginProps) {
     await request({
       method: "POST",
-      url: "token",
+      url: "login",
       data: values,
       headers: { "Content-Type": "application/json" },
     })
-      .then((response:any) => {
+      .then((response: any) => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         localStorage.setItem("access_token", response.data.access);
         localStorage.setItem("refresh_token", response.data.refresh);
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${response.data.access}`;
+        axios.defaults.headers.common["Authorization"] =
+          `Bearer ${response.data.access}`;
       })
       .catch((error) => {
         console.log(error.message);
@@ -70,12 +73,8 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   }
 
-
-
   return (
-    <User.Provider value={{ user, login, logout }}>
-      {children}
-    </User.Provider>
+    <User.Provider value={{ user, login, logout }}>{children}</User.Provider>
   );
 }
 

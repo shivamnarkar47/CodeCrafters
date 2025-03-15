@@ -1,4 +1,3 @@
-"use client";
 import { motion } from "motion/react";
 import { HeroHighlight, Highlight } from "../ui/hero-highlight";
 import { ShimmerButtonDemo } from "../utilities/ShimmerButton";
@@ -40,4 +39,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;
