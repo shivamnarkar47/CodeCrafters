@@ -1,7 +1,9 @@
 
 const StocksBlock = () => {
   return (
-    <div>StocksBlock</div>
+    <>
+      Stock
+    </>
   )
 }
 

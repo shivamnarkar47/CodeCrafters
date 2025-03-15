@@ -1,4 +1,4 @@
-import { InsuranceCard } from "../utilities/invesments"
+import { InsuranceCard } from "../utilities/Invesments"
 
 const InsuranceBlock = () => {
   return (

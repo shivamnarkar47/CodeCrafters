@@ -36,8 +36,8 @@ import { Link } from "react-router-dom"
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "Dhruv Bhatada",
+    email: "bhatadadhruv@gmail.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
