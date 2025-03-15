@@ -12,7 +12,7 @@ import json
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def register(request):
-    print(request.data)
+    # print(request.data)
     user_serializer = RegisterSerializer(data=request.data)
     if user_serializer.is_valid():
         user = user_serializer.save()
@@ -704,18 +704,14 @@ from .models import Favorite, StockPosition
 from .serializers import FavoriteSerializer
 
 class FavoriteListCreateView(APIView):
-    """API to list a user's favorite stocks and add new favorites."""
-
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        """Retrieve the list of favorite stocks for the authenticated user."""
         favorites = Favorite.objects.filter(user=request.user)
         serializer = FavoriteSerializer(favorites, many=True)
         return Response(serializer.data)
 
     def post(self, request):
-        """Add a stock to the user's favorites."""
         stock_symbol = request.data.get("stock_symbol")
         if not stock_symbol:
             return Response({"error": "Stock symbol is required."}, status=status.HTTP_400_BAD_REQUEST)
