@@ -483,7 +483,6 @@ class GridTradingAutobot:
             self.user.wallet += total_amount
             self.user.save()
             
-            # Add a buy order at the previous grid level
             prev_grid_price = price - self.grid_size
             if prev_grid_price >= self.min_price:
                 self.buy_orders.append(prev_grid_price)
@@ -694,3 +693,39 @@ class GridTradingBotDetailAPIView(APIView):
                 {"error": f"No active bot found for {stock_symbol}"},
                 status=status.HTTP_404_NOT_FOUND
             )
+        
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from django.shortcuts import get_object_or_404
+from .models import Favorite, StockPosition
+from .serializers import FavoriteSerializer
+
+class FavoriteListCreateView(APIView):
+    """API to list a user's favorite stocks and add new favorites."""
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        """Retrieve the list of favorite stocks for the authenticated user."""
+        favorites = Favorite.objects.filter(user=request.user)
+        serializer = FavoriteSerializer(favorites, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        """Add a stock to the user's favorites."""
+        stock_symbol = request.data.get("stock_symbol")
+        if not stock_symbol:
+            return Response({"error": "Stock symbol is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        stock = get_object_or_404(StockPosition, stock_symbol=stock_symbol, user=request.user)
+
+        # Ensure stock is not already favorited
+        favorite, created = Favorite.objects.get_or_create(user=request.user, stock=stock)
+
+        if not created:
+            return Response({"message": "Stock is already in favorites."}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = FavoriteSerializer(favorite)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

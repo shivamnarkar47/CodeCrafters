@@ -145,3 +145,11 @@ class StockTransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockTransaction
         fields = "__all__"
+
+class FavoriteSerializer(serializers.ModelSerializer):
+    stock_symbol = serializers.CharField(source="stock.stock_symbol", read_only=True)
+    stock_name = serializers.CharField(source="stock.stock_name", read_only=True)
+
+    class Meta:
+        model = Favorite
+        fields = ["id", "stock_symbol", "stock_name", "added_on"]

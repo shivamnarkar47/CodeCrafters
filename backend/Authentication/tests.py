@@ -3,8 +3,8 @@ import json
 
 def generate_benchmark_data():
     benchmark_stocks = {
-        "Nifty 50": ["TCS", "Reliance", "Infosys", "HDFC Bank", "ICICI Bank"],
-        "Nifty Bank": ["Axis Bank", "SBI", "Kotak Bank", "HDFC Bank", "ICICI Bank"],
+        "Nifty 50": ["Reliance Industries", "TCS", "Infosys", "HDFC Bank", "ICICI Bank"],
+        "Nifty Bank": ["Axis Bank", "SBI", "Kotak Mahindra Bank", "HDFC Bank", "ICICI Bank"],
         "Sensex": ["L&T", "HUL", "Bharti Airtel", "Maruti Suzuki", "Tata Motors"],
         "Midcap 100": ["AU Small Finance", "Muthoot Finance", "Balkrishna Ind", "Astral", "Coromandel Intl"],
         "Smallcap 100": ["Mazagon Dock", "Indigo Paints", "Borosil", "VST Tillers", "Balaji Amines"]
@@ -20,8 +20,7 @@ def generate_benchmark_data():
             "stocks": []
         }
         
-        for _ in range(100):  # Generate 100 stock entries per benchmark
-            stock = random.choice(stocks)
+        for stock in stocks:  # Ensure unique stock names per benchmark
             open_price = round(random.uniform(12000, 75000), 2)
             day_high = round(open_price + random.uniform(50, 500), 2)
             day_low = round(open_price - random.uniform(50, 500), 2)

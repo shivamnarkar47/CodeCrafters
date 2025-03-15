@@ -154,7 +154,6 @@ class Portfolio(models.Model):
     class Meta:
         db_table = "Portfolio"
 
-
 class StockPosition(models.Model):
     user = models.ForeignKey(
         "User", on_delete=models.CASCADE, related_name="stock_positions"
@@ -202,6 +201,18 @@ class StockPosition(models.Model):
     class Meta:
         db_table = "StockPosition"
         unique_together = ("user", "stock_symbol")
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="favorites")
+    stock = models.ForeignKey(StockPosition, on_delete=models.CASCADE, related_name="favorited_by")
+    added_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.email} - {self.stock.stock_symbol}"
+
+    class Meta:
+        db_table = "Favorite"
+        unique_together = ("user", "stock")
 
 
 class StockTransaction(models.Model):

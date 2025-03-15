@@ -10,6 +10,7 @@ urlpatterns = [
     path("stocks/buy/", BuyStockAPIView.as_view(), name="buy-stock"),
     path("stocks/sell/", SellStockAPIView.as_view(), name="sell-stock"),
     path("portfolio/", PortfolioAPIView.as_view(), name="get-portfolio"),
+    path("favorites/", FavoriteListCreateView.as_view(), name="favorites"),
     path("get_transactions/", get_transactions, name="get-transactions"),
     path('api/grid-trading/bot/', GridTradingBotAPIView.as_view(), name='grid-trading-bot'),
     path('api/grid-trading/bot/<str:stock_symbol>/', GridTradingBotDetailAPIView.as_view(), name='grid-trading-bot-detail'),
