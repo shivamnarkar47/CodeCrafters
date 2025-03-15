@@ -119,3 +119,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  :root {
+    --animate-marqee: "marquee" var(--duration) linear infinite;
+    --animate-marquee-vertical: "marquee-vertical" var(--duration) linear infinite;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-100% - var(--gap))); }
+  }
+  @keyframes marquee-vertical {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(-100% - var(--gap))); }
+  }
+}

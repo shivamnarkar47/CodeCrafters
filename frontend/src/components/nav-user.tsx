@@ -1,12 +1,14 @@
 "use client"
 
+import { Link } from "react-router-dom"
+
 import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
-  CreditCard,
+  // CreditCard,
   LogOut,
-  Sparkles,
+  // Sparkles,
 } from "lucide-react"
 
 import {
@@ -92,10 +94,12 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
+            <Link to="/" >
             <DropdownMenuItem>
-              <LogOut />
-              Log out
+                <LogOut />
+                Log out
             </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
