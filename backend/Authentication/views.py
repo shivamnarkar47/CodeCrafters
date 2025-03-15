@@ -12,6 +12,7 @@ import json
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def register(request):
+    print(request.data)
     user_serializer = RegisterSerializer(data=request.data)
     if user_serializer.is_valid():
         user = user_serializer.save()

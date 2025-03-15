@@ -14,9 +14,19 @@ SECRET_KEY = "django-insecure-*o&6!js*8(_g#q^jl(#rlk(ifkpv$m-@a17-5@bys@mh#&b&gw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0","127.0.0.1","localhost", "yourdomain.com"]
+CORS_ALLOWED_ORIGINS = [
+    "https://example.com",
+    "https://sub.example.com",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost:5173",
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
 
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -27,12 +37,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "Authentication",
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+       "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -40,6 +52,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "backend.urls"
+
 
 TEMPLATES = [
     {
@@ -128,6 +141,7 @@ CORS_ALLOW_METHODS = [
     "POST",
     "PUT",
 ]
+
 CORS_ALLOW_HEADERS = [
     "Api-Key",
     "Cache-Control",

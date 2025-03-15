@@ -1,15 +1,86 @@
-import React from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Link, useNavigate } from "react-router-dom";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { PasswordInput } from "./password-input";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "@/components/ui/popover";
+import { Textarea } from "../ui/textarea";
+import { request } from "@/lib/axiosRequest";
+import { useUserContext } from "@/context/ContextProvider";
+
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+  first_name: z.string().min(3),
+  last_name: z.string().min(3),
+  phone: z.string().min(10),
+  dob: z.string().min(6),
+  address: z.string().min(5),
+});
 
 export default function SignUp() {
-  const [reset, setReset] = React.useState(false);
+  const { login } = useUserContext();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [time, setTime] = useState<string>("05:00");
+  const [date, setDate] = useState<Date | null>(null);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      first_name: "",
+      last_name: "",
+      phone: "",
+      dob: "",
+      address: "",
+    },
+  });
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+
+    request({
+      method: "POST",
+      url: "register",
+      data: values,
+    })
+      .then((res) => {
+        console.log(res);
+        login();
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <main className="w-full min-h-screen flex overflow-y-hidden bg-white">
-      <div className="relative flex-1 hidden items-center justify-center min-h-screen bg-transparent lg:flex">
+      <div className="relative flex-1 hidden items-center justify-center min-h-screen dark:bg-black bg-transparent lg:flex">
         <div className="relative z-10 w-full max-w-lg">
           <img
             src="https://farmui.com/logo-dark.svg"
@@ -17,7 +88,7 @@ export default function SignUp() {
             className="rounded-full"
           />
           <div className=" mt-10 space-y-3">
-            <h3 className="text-black text-3xl md:text-4xl lg:text-5xl font-normal font-geist tracking-tighter">
+            <h3 className="dark:text-white text-black text-3xl md:text-4xl  lg:text-5xl font-normal font-geist tracking-tighter">
               Start growing your portfolio already.
             </h3>
 
@@ -52,15 +123,8 @@ export default function SignUp() {
             </div>
           </div>
         </div>
-        <div
-          className="absolute inset-0 my-auto h-full"
-          style={
-            {
-              // background: "linear- gradient(152.92deg, rgba(192, 132, 252, 0.2) 4.54%, rgba(232, 121, 249, 0.26) 34.2%, rgba(192, 132, 252, 0.1) 77.55%)", filter: "blur(118px)"
-            }
-          }
-        >
-          <div className="absolute  inset-0 opacity-15  w-full bg-transparent  bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
+        <div className="absolute inset-0 my-auto h-full">
+          <div className="absolute  inset-0 opacity-15  w-full  bg-transparent  bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
           <img
             className="absolute inset-x-0 -top-20 opacity-25 "
             src={
@@ -72,7 +136,7 @@ export default function SignUp() {
           />
         </div>
       </div>
-      <div className="flex-1 relative flex items-center justify-center min-h-full">
+      <div className="flex-1 relative flex items-center dark:bg-black  justify-center min-h-full">
         <img
           className="absolute inset-x-0 -z-1 -top-20 opacity-75 "
           src={
@@ -82,7 +146,7 @@ export default function SignUp() {
           height={1000}
           alt="back bg"
         />
-        <div className="w-full max-w-md md:max-w-lg space-y-8 px-4  text-gray-600 sm:px-0 z-20">
+        <div className="w-full max-w-md md:max-w-lg space-y-8 px-4   text-gray-600 sm:px-0 z-20">
           <div className="relative">
             <img
               src="https://farmui.com/logo.svg"
@@ -90,7 +154,7 @@ export default function SignUp() {
               className="lg:hidden rounded-full"
             />
             <div className="mt-5 space-y-2">
-              <h3 className="text-black text-3xl  font-semibold tracking-tighter sm:text-4xl">
+              <h3 className="text-black text-3xl dark:text-white font-semibold tracking-tighter sm:text-4xl">
                 Sign up - Start journey
               </h3>
               <p className="text-gray-400">
@@ -104,49 +168,169 @@ export default function SignUp() {
               </p>
             </div>
           </div>
-         
-          <form onSubmit={(e) => {e.preventDefault();navigate("/dashboard")}} className="space-y-5 z-20">
-            <div>
-              <label className="font-medium text-black font-geist">
-                Name
-              </label>
-              <Input
-                type="text"
-                required
-                className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="font-medium text-black font-geist">
-                Email
-              </label>
-              <Input
-                type="email"
-                required
-                className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="font-medium text-black font-geist">
-                Password
-              </label>
-              <Input
-                type="password"
-                required
-                className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
-              />
-            </div>
-            <button className="w-full font-geist tracking-tighter text-center rounded-md bg-gradient-to-br from-blue-400 to-blue-700 px-4 py-2 text-lg text-zinc-50 ring-2 ring-blue-500/50 ring-offset-2 ring-offset-zinc-950 transition-all hover:scale-[1.02] hover:ring-transparent active:scale-[0.98] active:ring-blue-500/70 flex items-center justify-center gap-2">
-              Create account
-            </button>
-          </form>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-5 z-20"
+            >
+              <div>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-medium text-black font-geist">
+                        Email
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your Email"
+                          {...field}
+                          className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div>
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-medium text-black font-geist">
+                        Password
+                      </FormLabel>
+                      <FormControl>
+                        <PasswordInput
+                          placeholder="Enter your Password"
+                          {...field}
+                          className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="flex flex-row  space-x-2 w-full    ">
+                <FormField
+                  control={form.control}
+                  name="first_name"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2">
+                      <FormLabel className="font-medium text-black font-geist">
+                        First Name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your First Name"
+                          {...field}
+                          className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="last_name"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2">
+                      <FormLabel className="font-medium text-black font-geist">
+                        Last Name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your Last Name"
+                          {...field}
+                          className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="flex flex-row  space-x-2 w-full    ">
+                <FormField
+                  control={form.control}
+                  name="dob"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col w-full">
+                      <FormLabel>Date</FormLabel>
+                      <Input
+                        placeholder="Enter your DOB"
+                        {...field}
+                        className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2">
+                      <FormLabel className="font-medium text-black font-geist">
+                        Phone
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter your Phone No."
+                          {...field}
+                          className="w-full mt-1 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div>
+                <FormField
+                  control={form.control}
+                  name="address"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-medium dark:text-white text-black font-geist">
+                        Address
+                      </FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Enter your Address"
+                          {...field}
+                          className="w-full mt-2 px-3 py-5 text-black bg-transparent outline-none border focus:border-purple-600 shadow-sm rounded-lg"
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full font-geist tracking-tighter text-center rounded-md bg-gradient-to-br from-blue-400 to-blue-700 px-4 py-2 text-lg text-zinc-50 ring-2 ring-blue-500/50 ring-offset-2 ring-offset-zinc-950 transition-all hover:scale-[1.02] hover:ring-transparent active:scale-[0.98] active:ring-blue-500/70 flex items-center justify-center gap-2"
+              >
+                Create account
+              </button>
+            </form>
+          </Form>
         </div>
       </div>
     </main>
   );
 }
-
-
-
-
-            
