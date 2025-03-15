@@ -56,6 +56,10 @@ const data = {
           url: "/dashboard/explore/bonds",
         },
         {
+          title: "Crypto",
+          url: "/dashboard/explore/crypto",
+        },
+        {
           title: "Insurance",
           url: "/dashboard/explore/insurance",
         },

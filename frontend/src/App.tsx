@@ -15,6 +15,8 @@ import InsuranceBlock from "./components/DashboardPage/InsuranceBlock"
 import WatchList from "./components/DashboardPage/WatchList"
 import SignIn from "./components/AuthPage/SignIn"
 import SignUp from "./components/AuthPage/SignUp"
+import CryptoBlock from "./components/DashboardPage/CryptoBlock"
+import CryptoBlockID from "./components/DashboardPage/CryptoBlockID"
 
 
 function App() {
@@ -32,9 +34,13 @@ function App() {
               <Route path="/dashboard" element={<SideBar />}>
                 <Route index element={<FinDashboard />} />
                 <Route path="explore" >
-                <Route path="stocks" element={<StocksBlock />} />
-                <Route path="bonds" element={<BondsBlock />} />
-                <Route path="Insurance" element={<InsuranceBlock />} />
+                  <Route path="stocks" element={<StocksBlock />} />
+                  <Route path="crypto" >
+                    <Route index element={<CryptoBlock />} />
+                    <Route path=":id" element={<CryptoBlockID />} />
+                  </Route>
+                  <Route path="bonds" element={<BondsBlock />} />
+                  <Route path="insurance" element={<InsuranceBlock />} />
                 </Route>
                 <Route path="watchlist" element={<WatchList />} />
                 <Route path="investments" element={<Investments />} />
@@ -44,8 +50,8 @@ function App() {
               </Route>
 
               <Route path="/auth" >
-              <Route index  element={<SignIn />} />
-              <Route path="signup" element={<SignUp />} />
+                <Route index element={<SignIn />} />
+                <Route path="signup" element={<SignUp />} />
               </Route>
 
             </Routes>
