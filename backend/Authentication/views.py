@@ -30,9 +30,9 @@ def register(request):
 def login_view(request):
     if request.method == "POST":
         mutable_data = request.data
-        unique_id = mutable_data.get("unique_id")
+        email = mutable_data.get("email")
         try:
-            user = User.objects.get(unique_id=unique_id)
+            user = User.objects.get(email=email)
         except User.DoesNotExist:
             return Response(
                 {"error": "User with this email does not exist."},
@@ -52,7 +52,26 @@ def login_view(request):
         {"message": "Method not allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
     )
 
-
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_transactions(request):
+    try:
+        user_id = request.user.unique_id
+        try:
+            userprofile = User.objects.get(unique_id=user_id)
+        except User.DoesNotExist:
+            return Response(
+                {"message": "User Profile does not exist"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        transactions = StockTransaction.objects.filter(user=userprofile)
+        serializer = StockTransactionSerializer(transactions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except StockTransaction.DoesNotExist:
+        return Response("No Transaction Found", status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_profile_view(request):
@@ -334,4 +353,344 @@ class PortfolioAPIView(APIView):
             return Response(
                 {"error": f"An error occurred: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from decimal import Decimal
+import uuid
+import time
+import threading
+from django.utils import timezone
+from django.db import transaction
+
+class GridTradingAutobot:
+    def __init__(self, user, stock_symbol, min_price, max_price, grid_count, investment, 
+                 stock_name="", exchange="", brokerage_fee=0, taxes=0, other_charges=0):
+        self.user = user
+        self.stock_symbol = stock_symbol.upper()
+        self.min_price = Decimal(str(min_price))
+        self.max_price = Decimal(str(max_price))
+        self.grid_count = int(grid_count)
+        self.investment = Decimal(str(investment))
+        self.stock_name = stock_name
+        self.exchange = exchange
+        self.brokerage_fee = Decimal(str(brokerage_fee))
+        self.taxes = Decimal(str(taxes))
+        self.other_charges = Decimal(str(other_charges))
+        
+        self.grid_size = (self.max_price - self.min_price) / self.grid_count
+        self.shares_per_grid = self.investment / (self.grid_count * self.max_price)
+        self.shares_per_grid = int(self.shares_per_grid)
+        
+        self.is_running = False
+        self.thread = None
+        self.grid_levels = []
+        self.buy_orders = []
+        self.sell_orders = []
+        
+    def setup_grid(self):
+        self.grid_levels = []
+        for i in range(self.grid_count + 1):
+            price = self.min_price + (i * self.grid_size)
+            self.grid_levels.append(price)
+            
+        self.buy_orders = self.grid_levels[:-1]
+        
+        self.sell_orders = []
+        
+    def get_current_price(self):
+        import random
+        price_range = self.max_price - self.min_price
+        random_offset = Decimal(str(random.uniform(-0.1, 0.1))) * price_range
+        mock_price = self.min_price + (price_range / 2) + random_offset
+        
+        if mock_price < self.min_price:
+            mock_price = self.min_price
+        elif mock_price > self.max_price:
+            mock_price = self.max_price
+            
+        return mock_price
+    
+    def execute_buy(self, price):
+        quantity = self.shares_per_grid
+        total_amount = (quantity * price) + self.brokerage_fee + self.taxes + self.other_charges
+        
+        if self.user.wallet < total_amount:
+            return False, "Insufficient funds"
+        
+        with transaction.atomic():
+            transaction_obj = StockTransaction(
+                transaction_id=uuid.uuid4(),
+                user=self.user,
+                stock_symbol=self.stock_symbol,
+                stock_name=self.stock_name,
+                exchange=self.exchange,
+                transaction_type="BUY",
+                quantity=quantity,
+                price_per_share=price,
+                total_amount=total_amount,
+                brokerage_fee=self.brokerage_fee,
+                taxes=self.taxes,
+                other_charges=self.other_charges,
+                status="EXECUTED",
+                execution_date=timezone.now(),
+            )
+            transaction_obj.save()
+            
+            self.user.wallet -= total_amount
+            self.user.save()
+            
+            next_grid_price = price + self.grid_size
+            if next_grid_price <= self.max_price:
+                self.sell_orders.append(next_grid_price)
+            
+        return True, transaction_obj
+    
+    def execute_sell(self, price):
+        quantity = self.shares_per_grid
+        
+        position = StockPosition.objects.filter(
+            user=self.user, stock_symbol=self.stock_symbol
+        ).first()
+        
+        if not position or position.quantity < quantity:
+            return False, "Insufficient shares"
+        
+        total_amount = (quantity * price) - self.brokerage_fee - self.taxes - self.other_charges
+        
+        with transaction.atomic():
+            transaction_obj = StockTransaction(
+                transaction_id=uuid.uuid4(),
+                user=self.user,
+                stock_symbol=self.stock_symbol,
+                stock_name=position.stock_name,
+                exchange=self.exchange,
+                transaction_type="SELL",
+                quantity=quantity,
+                price_per_share=price,
+                total_amount=total_amount,
+                brokerage_fee=self.brokerage_fee,
+                taxes=self.taxes,
+                other_charges=self.other_charges,
+                status="EXECUTED",
+                execution_date=timezone.now(),
+            )
+            transaction_obj.save()
+            
+            self.user.wallet += total_amount
+            self.user.save()
+            
+            # Add a buy order at the previous grid level
+            prev_grid_price = price - self.grid_size
+            if prev_grid_price >= self.min_price:
+                self.buy_orders.append(prev_grid_price)
+            
+        return True, transaction_obj
+    
+    def run(self):
+        self.is_running = True
+        while self.is_running:
+            try:
+                current_price = self.get_current_price()
+                
+                buy_orders_to_execute = [price for price in self.buy_orders if current_price <= price]
+                for price in buy_orders_to_execute:
+                    success, result = self.execute_buy(price)
+                    if success:
+                        self.buy_orders.remove(price)
+                
+                sell_orders_to_execute = [price for price in self.sell_orders if current_price >= price]
+                for price in sell_orders_to_execute:
+                    success, result = self.execute_sell(price)
+                    if success:
+                        self.sell_orders.remove(price)
+                
+                time.sleep(30) 
+                
+            except Exception as e:
+                print(f"Error in grid trading bot: {str(e)}")
+                time.sleep(60) 
+    
+    def start(self):
+        if not self.is_running:
+            self.setup_grid()
+            self.thread = threading.Thread(target=self.run)
+            self.thread.daemon = True
+            self.thread.start()
+            return True
+        return False
+    
+    def stop(self):
+        if self.is_running:
+            self.is_running = False
+            if self.thread:
+                self.thread.join(timeout=2)
+            return True
+        return False
+    
+    def get_status(self):
+        return {
+            "is_running": self.is_running,
+            "stock_symbol": self.stock_symbol,
+            "min_price": str(self.min_price),
+            "max_price": str(self.max_price),
+            "grid_count": self.grid_count,
+            "investment": str(self.investment),
+            "grid_size": str(self.grid_size),
+            "shares_per_grid": self.shares_per_grid,
+            "buy_orders": [str(price) for price in self.buy_orders],
+            "sell_orders": [str(price) for price in self.sell_orders]
+        }
+
+active_bots = {}
+
+
+class GridTradingBotAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        """Create and start a new grid trading bot"""
+        stock_symbol = request.data.get("stock_symbol")
+        min_price = request.data.get("min_price")
+        max_price = request.data.get("max_price")
+        grid_count = request.data.get("grid_count")
+        investment = request.data.get("investment")
+        stock_name = request.data.get("stock_name", "")
+        exchange = request.data.get("exchange", "")
+        brokerage_fee = request.data.get("brokerage_fee", 0)
+        taxes = request.data.get("taxes", 0)
+        other_charges = request.data.get("other_charges", 0)
+        
+        if not all([stock_symbol, min_price, max_price, grid_count, investment]):
+            return Response(
+                {"error": "stock_symbol, min_price, max_price, grid_count, and investment are required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            min_price = Decimal(str(min_price))
+            max_price = Decimal(str(max_price))
+            grid_count = int(grid_count)
+            investment = Decimal(str(investment))
+            
+            if min_price >= max_price:
+                return Response(
+                    {"error": "min_price must be less than max_price"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+                
+            if grid_count <= 0:
+                return Response(
+                    {"error": "grid_count must be greater than zero"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+                
+            if investment <= 0:
+                return Response(
+                    {"error": "investment must be greater than zero"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            if request.user.wallet < investment:
+                return Response(
+                    {"error": "Insufficient funds for the investment amount"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            bot_key = f"{request.user.unique_id}_{stock_symbol}"
+            
+            if bot_key in active_bots:
+                active_bots[bot_key].stop()
+            
+            bot = GridTradingAutobot(
+                user=request.user,
+                stock_symbol=stock_symbol,
+                min_price=min_price,
+                max_price=max_price,
+                grid_count=grid_count,
+                investment=investment,
+                stock_name=stock_name,
+                exchange=exchange,
+                brokerage_fee=brokerage_fee,
+                taxes=taxes,
+                other_charges=other_charges
+            )
+            
+            success = bot.start()
+            if success:
+                active_bots[bot_key] = bot
+                return Response(
+                    {
+                        "message": "Grid trading bot started successfully",
+                        "status": bot.get_status()
+                    },
+                    status=status.HTTP_201_CREATED
+                )
+            else:
+                return Response(
+                    {"error": "Failed to start the grid trading bot"},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+                
+        except ValueError as e:
+            return Response(
+                {"error": f"Invalid value: {str(e)}"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            return Response(
+                {"error": f"An error occurred: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+    
+    def get(self, request):
+        user_bots = {}
+        for key, bot in active_bots.items():
+            if key.startswith(f"{request.user.unique_id}_"):
+                user_bots[bot.stock_symbol] = bot.get_status()
+        
+        return Response(
+            {"active_bots": user_bots},
+            status=status.HTTP_200_OK
+        )
+
+
+class GridTradingBotDetailAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request, stock_symbol):
+        bot_key = f"{request.user.unique_id}_{stock_symbol.upper()}"
+        if bot_key in active_bots:
+            return Response(
+                active_bots[bot_key].get_status(),
+                status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {"error": f"No active bot found for {stock_symbol}"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+    
+    def delete(self, request, stock_symbol):
+        bot_key = f"{request.user.unique_id}_{stock_symbol.upper()}"
+        if bot_key in active_bots:
+            success = active_bots[bot_key].stop()
+            if success:
+                del active_bots[bot_key]
+                return Response(
+                    {"message": f"Grid trading bot for {stock_symbol} stopped successfully"},
+                    status=status.HTTP_200_OK
+                )
+            else:
+                return Response(
+                    {"error": f"Failed to stop the grid trading bot for {stock_symbol}"},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+        else:
+            return Response(
+                {"error": f"No active bot found for {stock_symbol}"},
+                status=status.HTTP_404_NOT_FOUND
             )

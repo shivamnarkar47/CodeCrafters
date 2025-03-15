@@ -140,3 +140,8 @@ class PortfolioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Portfolio
         fields = ["beta", "total_value", "last_updated", "positions"]
+
+class StockTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StockTransaction
+        fields = "__all__"
