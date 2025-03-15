@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('Authentication', '0002_marketindex_portfolio_stockprice_stocktransaction_and_more'),
+        (
+            "Authentication",
+            "0002_marketindex_portfolio_stockprice_stocktransaction_and_more",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='wallet',
+            model_name="user",
+            name="wallet",
             field=models.IntegerField(blank=True, default=0, null=True),
         ),
     ]
