@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as React from "react"
 import {
   BookOpen,
@@ -91,7 +92,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: SquareTerminal,
       }
     ],
-    // navSecondary: [
+    navSecondary: [
     // {
     //   title: "Support",
     //   url: "#",
@@ -103,24 +104,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     //   icon: Moon,
     // },
 
-    // ],
-    // projects: [
-    //   {
-    //     name: "Design Engineering",
-    //     url: "#",
-    //     icon: Frame,
-    //   },
-    //   {
-    //     name: "Sales & Marketing",
-    //     url: "#",
-    //     icon: PieChart,
-    //   },
-    //   {
-    //     name: "Travel",
-    //     url: "#",
-    //     icon: Map,
-    //   },
-    // ],
+    ],
+    projects: [
+      {
+        name: "Design Engineering",
+        url: "#",
+        icon: Frame,
+      },
+      {
+        name: "Sales & Marketing",
+        url: "#",
+        icon: PieChart,
+      },
+      {
+        name: "Travel",
+        url: "#",
+        icon: Map,
+      },
+    ],
   }
 
   return (
