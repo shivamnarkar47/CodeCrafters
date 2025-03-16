@@ -34,10 +34,12 @@ import {
 import { ModeToggle } from "./mode-toggle"
 import { Link } from "react-router-dom"
 import { useUserContext } from "@/context/ContextProvider"
+import { title } from "process"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const {user} = useUserContext()
+  const { user } = useUserContext()
+  console.log(user)
   const data = {
     userData: {
       name: `${user.first_name}`,
@@ -69,52 +71,58 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: "WatchList",
         url: "/dashboard/watchlist",
         icon: Clock,
-        
+
       },
       {
         title: "Investments",
         url: "/dashboard/investments",
-        icon: ChartCandlestick ,
-        
+        icon: ChartCandlestick,
+
       },
       {
         title: "Autobot",
         url: "/dashboard/autobot",
-        icon: ChartCandlestick ,
-        
-      },
-    ],
-    navSecondary: [
-      // {
-      //   title: "Support",
-      //   url: "#",
-      //   icon: LifeBuoy,
-      // },
-      // {
-      //   title: "Light/Dark Mode",
-      //   url: "#",
-      //   icon: Moon,
-      // },
-    ],
-    projects: [
-      {
-        name: "Design Engineering",
-        url: "#",
-        icon: Frame,
+        icon: ChartCandlestick,
+
       },
       {
-        name: "Sales & Marketing",
-        url: "#",
-        icon: PieChart,
-      },
-      {
-        name: "Travel",
-        url: "#",
-        icon: Map,
-      },
+        title: "Wallet",
+        url: "/dashboard/wallet",
+        icon: SquareTerminal,
+      }
     ],
+    // navSecondary: [
+    // {
+    //   title: "Support",
+    //   url: "#",
+    //   icon: LifeBuoy,
+    // },
+    // {
+    //   title: "Light/Dark Mode",
+    //   url: "#",
+    //   icon: Moon,
+    // },
+
+    // ],
+    // projects: [
+    //   {
+    //     name: "Design Engineering",
+    //     url: "#",
+    //     icon: Frame,
+    //   },
+    //   {
+    //     name: "Sales & Marketing",
+    //     url: "#",
+    //     icon: PieChart,
+    //   },
+    //   {
+    //     name: "Travel",
+    //     url: "#",
+    //     icon: Map,
+    //   },
+    // ],
   }
-  
+
   return (
     <Sidebar
       className="md:h-full h-[80vh] pt-10"

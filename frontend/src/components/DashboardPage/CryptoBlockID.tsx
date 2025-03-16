@@ -63,18 +63,18 @@ const CryptoBlockID = () => {
     const buyCrypto = () => {
         request({
             method: "POST",
-            url: "transactions",
+            url: "stocks/buy",
             data: {
                 stock_symbol: cryptoData.symbol,
                 stock_name: cryptoData.name,
                 exchange: "crypto",
-                price: cryptoData.market_data.current_price.inr*quantity,
+                price_per_share: cryptoData.market_data.current_price.inr,
                 quantity: quantity,
-                transaction_type: "buy"
+                // transaction_type: "buy"
             }
         }).then((res) => {
             console.log(res.data)
-
+            navigate('/dashboard/investments')
         })
     }
 
