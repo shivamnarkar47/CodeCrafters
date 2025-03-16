@@ -58,7 +58,7 @@ const Investments = () => {
         responseType: "blob",
       });
 
-      
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -190,8 +190,9 @@ const Investments = () => {
                         />
                         <Button
                           variant="destructive"
+                          
                           size="sm"
-                          className="px-4"
+                          className="px-4 text-white"
                           onPress={() => handleSell(position.stock_symbol, position.current_value)}
                         >
                           Sell
