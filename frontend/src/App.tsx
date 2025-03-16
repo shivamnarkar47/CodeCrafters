@@ -18,6 +18,7 @@ import SignUp from "./components/AuthPage/SignUp"
 import CryptoBlock from "./components/DashboardPage/CryptoBlock"
 import CryptoBlockID from "./components/DashboardPage/CryptoBlockID"
 import ProtectedRoute from "./components/ProtectedRoute"
+import AutoBot from "./components/DashboardPage/AutoBot"
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
                   </Route>
                   <Route path="watchlist" element={<WatchList />} />
                   <Route path="investments" element={<Investments />} />
+                  <Route path="autobot" element={<AutoBot />} />
                 </Route>
 
 
