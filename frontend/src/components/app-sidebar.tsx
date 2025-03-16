@@ -86,11 +86,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: ChartCandlestick,
 
       },
-      {
-        title: "Wallet",
-        url: "/dashboard/wallet",
-        icon: SquareTerminal,
-      }
+      // {
+      //   title: "Wallet",
+      //   url: "/dashboard/wallet",
+      //   icon: SquareTerminal,
+      // }
     ],
     navSecondary: [
     // {

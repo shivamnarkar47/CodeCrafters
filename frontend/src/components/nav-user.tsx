@@ -83,11 +83,12 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+            <Link to="/dashboard/wallet" >
               <DropdownMenuItem>
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
-             
+             </Link>
               <DropdownMenuItem>
                 <Bell />
                 Notifications
