@@ -1,8 +1,9 @@
+import StocksTable from "../utilities/StockTable"
 
 const StocksBlock = () => {
   return (
     <>
-      Stock
+      <StocksTable />
     </>
   )
 }
