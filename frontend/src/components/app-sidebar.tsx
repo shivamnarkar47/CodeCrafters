@@ -56,10 +56,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             url: "/dashboard/explore/stocks",
           },
           {
-            title: "Bonds",
-            url: "/dashboard/explore/bonds",
-          },
-          {
             title: "Crypto",
             url: "/dashboard/explore/crypto",
           },
@@ -78,6 +74,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {
         title: "Investments",
         url: "/dashboard/investments",
+        icon: ChartCandlestick ,
+        
+      },
+      {
+        title: "Autobot",
+        url: "/dashboard/autobot",
         icon: ChartCandlestick ,
         
       },

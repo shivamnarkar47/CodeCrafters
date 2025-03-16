@@ -25,7 +25,8 @@ const TopGainers = () => {
 
     return (
     <>  
-        <h1 className="text-center font-bold text-3xl my-18">TOP CRYPTO GAINS - ( Last 24 hrs )</h1>
+        <h1 className="text-center font-bold text-3xl mt-18">TOP CRYPTO GAINS</h1>
+        <p className="text-center font-bold text-gray-300 text-lg mb-12">( Last 24h )</p>
         <section className="text-gray-600 body-font">
             <div className="container px-5 pb-24 mx-auto">
                 <div className="flex flex-wrap -m-2">

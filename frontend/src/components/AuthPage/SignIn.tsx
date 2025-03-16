@@ -1,5 +1,4 @@
 import { ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -140,7 +139,7 @@ export default function SignIn() {
                 />
               </div>
           <button className="w-full font-geist tracking-tighter text-center rounded-md bg-gradient-to-br from-blue-400 to-blue-700 px-4 py-2 text-lg text-zinc-50 ring-2 ring-blue-500/50 ring-offset-2 ring-offset-gray-300 transition-all hover:scale-[1.02] hover:ring-transparent active:scale-[0.98] active:ring-blue-500/70 flex items-center justify-center gap-2 mt-5" >
-            Sign in
+            Login
             <ChevronRight className="inline-flex justify-center items-center w-4 h-4 ml-2 group-hover:translate-x-1 duration-300" />
           </button>
         </form>

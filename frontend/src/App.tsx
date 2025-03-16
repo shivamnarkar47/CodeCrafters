@@ -17,11 +17,7 @@ import SignIn from "./components/AuthPage/SignIn"
 import SignUp from "./components/AuthPage/SignUp"
 import CryptoBlock from "./components/DashboardPage/CryptoBlock"
 import CryptoBlockID from "./components/DashboardPage/CryptoBlockID"
-
-import { Navigate, Outlet } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute"
-
-
 
 
 function App() {

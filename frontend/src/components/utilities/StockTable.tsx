@@ -57,7 +57,7 @@ const StocksTable = () => {
                         <TableRow 
                         key={index} 
                         className="hover:cursor-pointer hover:bg-gray-100 transition duration-200"
-                        onClick={() => navigate(`/dashboard/explore/stocks/${stock.id}`)}
+                        onClick={() => navigate(`/dashboard/explore/stocks`)}
                     >
                         <TableCell className="font-semibold">{stock.stock}</TableCell>
                         <TableCell className="text-right text-red-600">Rs {stock.day_low.toFixed(2)}</TableCell>

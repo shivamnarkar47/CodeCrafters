@@ -99,7 +99,7 @@ const CryptoBlockID = () => {
                                 <Button className={"bg-green-400 px-8 dark:text-white text-white rounded-full font-bold h-10 hover:cursor-pointer"} variant="default">BUY</Button>
                                 <DialogOverlay>
                                     <DialogContent className="sm:max-w-[425px]">
-                                        {({ close }) => (
+                                        {() => (
                                             <>
                                                 <DialogHeader>
                                                     <DialogTitle>Invest in your future :)</DialogTitle>
