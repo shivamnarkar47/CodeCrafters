@@ -172,7 +172,8 @@ class TransactionSerializer(serializers.Serializer):
     price = serializers.DecimalField(max_digits=20, decimal_places=2, required=True)
     quantity = serializers.IntegerField(required=True)
     transaction_type = serializers.ChoiceField(choices=["buy", "sell"], required=True)
+    
+    class Meta:
+        model = Transaction
+        fields = '__all__'
 
-    def create(self, validated_data):
-        # Assuming you have a model named `Transaction` to save the data
-        return Transaction.objects.create(**validated_data)

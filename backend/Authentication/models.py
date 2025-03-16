@@ -219,13 +219,14 @@ class Favorite(models.Model):
         # unique_together = ("user", "stock_symbol")
 
 class Transaction(models.Model):
-    payment_id = models.CharField(max_length=200, verbose_name="Payment ID")
-    order_id = models.CharField(max_length=200, verbose_name="Order ID")
-    signature = models.CharField(
-        max_length=500, verbose_name="Signature", blank=True, null=True
-    )
-    amount = models.IntegerField(verbose_name="Amount")
-    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="transactions")
+    stock_symbol = models.CharField(max_length=20)
+    stock_name = models.CharField(max_length=255, blank=True, null=True)
+    exchange = models.CharField(max_length=50, blank=True, null=True)
+    transaction_type = models.CharField(max_length=10)
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=14, decimal_places=2)
+    
 
     def __str__(self):
         return str(self.id)
