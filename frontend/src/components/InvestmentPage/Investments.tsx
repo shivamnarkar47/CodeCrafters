@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { toast } from "react-hot-toast";
-import { Loader2, AlertCircle } from "lucide-react"; 
+import { Loader2, AlertCircle, FileSpreadsheet } from "lucide-react"; 
 
 interface Portfolio {
   wallet_balance: number;
@@ -48,6 +48,28 @@ const Investments = () => {
       [stockSymbol]: { quantity: value },
     }));
   };
+
+
+  const downloadCSV = async () => {
+    try {
+      const response = await request({
+        method: "GET",
+        url: "get-report",
+        responseType: "blob",
+      });
+
+      
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `portfolio-${Date.now()}.xlsx`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      setError("Failed to download CSV. Try again.");
+    }
+  }
 
   const handleSell = async (stockSymbol: string, price_per_share: number) => {
     const { quantity } = sellData[stockSymbol] || {};
@@ -112,9 +134,13 @@ const Investments = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-3xl font-bold mb-6 pl-2 text-gray-900">Investment Portfolio</h2>
+      <div className="flex justify-between items-center  mb-6">
+      <h2 className="text-3xl font-bold  pl-2 text-gray-900">Investment Portfolio</h2>
+      <Button variant="default" size="sm" onPress={downloadCSV} className={"gap-2"}>
+        <span>Download CSV</span> <FileSpreadsheet size={'13px'}/>
+      </Button>
+      </div>
 
-      {/* Portfolio Overview */}
       <Card className="mb-6 shadow-md">
         <CardHeader>
           <CardTitle className="text-xl">Portfolio Overview</CardTitle>
@@ -127,7 +153,6 @@ const Investments = () => {
         </CardContent>
       </Card>
 
-      {/* Stock Positions Table */}
       <Card className="shadow-md">
         <CardHeader>
           <CardTitle className="text-xl">Stock Positions</CardTitle>
