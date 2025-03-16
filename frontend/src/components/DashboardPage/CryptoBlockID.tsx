@@ -12,7 +12,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { FieldGroup, Label } from "@/components/ui/field"
-import { Input, TextField } from "@/components/ui/textfield"
+// import { Input, TextField } from "@/components/ui/textfield"
 import { NumberField, NumberFieldInput, NumberFieldSteppers } from "../ui/numberfield"
 const formatCurrency = (value: any) => {
     if (!value) return 'N/A';
@@ -93,10 +93,10 @@ const CryptoBlockID = () => {
                             <h1 className="text-3xl font-bold dark:text-gray-100 text-gray-900">{cryptoData.name}</h1>
                         </div>
                         <div className="flex gap-4 items-center">
-                            <Button className='bg-blue-300 px-8 rounded-full font-semibold h-10 hover:cursor-pointer' onClick={postWatchList}>ADD TO WATCHLIST</Button>
+                            <Button className='bg-blue-300 px-8 rounded-full font-semibold h-10 hover:cursor-pointer' onPress={postWatchList}>ADD TO WATCHLIST</Button>
                             {/* <Button className='bg-green-400 px-8 rounded-full font-bold h-10 hover:cursor-pointer'>BUY</Button> */}
                             <DialogTrigger>
-                                <Button className={"bg-green-400 px-8 dark:text-white text-white rounded-full font-bold h-10 hover:cursor-pointer"} variant="solid">BUY</Button>
+                                <Button className={"bg-green-400 px-8 dark:text-white text-white rounded-full font-bold h-10 hover:cursor-pointer"} variant="default">BUY</Button>
                                 <DialogOverlay>
                                     <DialogContent className="sm:max-w-[425px]">
                                         {({ close }) => (
@@ -108,7 +108,7 @@ const CryptoBlockID = () => {
                                                     <NumberField defaultValue={10} minValue={1}>
                                                         <Label className="p-2 ">Quantity</Label>
                                                         <FieldGroup className={'my-4'}>
-                                                            <NumberFieldInput onChange={(e) => { setQuantity(e.target.value) }} />
+                                                            <NumberFieldInput onChange={(e) => { setQuantity(Number(e.target.value)) }} />
                                                             <NumberFieldSteppers />
                                                         </FieldGroup>
                                                     </NumberField>

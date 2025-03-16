@@ -1,0 +1,309 @@
+{
+  "benchmarks": [
+    {
+      "id": 1,
+      "benchmark": "Nifty 50",
+      "stocks": [
+        {
+          "id": 1,
+          "stock": "Reliance Industries",
+          "open": 20115.16,
+          "day_high": 20557.72,
+          "day_low": 19919.03,
+          "close": 20487.8,
+          "buy_price": 20528.76,
+          "sell_price": 20457.63,
+          "current_price": 20296.08
+        },
+        {
+          "id": 2,
+          "stock": "TCS",
+          "open": 53431.08,
+          "day_high": 53842.73,
+          "day_low": 53009.63,
+          "close": 53469.82,
+          "buy_price": 53490.53,
+          "sell_price": 53452.78,
+          "current_price": 53571.85
+        },
+        {
+          "id": 3,
+          "stock": "Infosys",
+          "open": 61815.18,
+          "day_high": 62212.78,
+          "day_low": 61442.87,
+          "close": 61867.98,
+          "buy_price": 61906.43,
+          "sell_price": 61821.08,
+          "current_price": 61740.21
+        },
+        {
+          "id": 4,
+          "stock": "HDFC Bank",
+          "open": 72960.78,
+          "day_high": 73382.78,
+          "day_low": 72784.0,
+          "close": 73131.94,
+          "buy_price": 73147.86,
+          "sell_price": 73119.0,
+          "current_price": 72823.96
+        },
+        {
+          "id": 5,
+          "stock": "ICICI Bank",
+          "open": 27451.3,
+          "day_high": 27902.42,
+          "day_low": 27167.6,
+          "close": 27726.54,
+          "buy_price": 27739.5,
+          "sell_price": 27719.52,
+          "current_price": 27817.7
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "benchmark": "Nifty Bank",
+      "stocks": [
+        {
+          "id": 1,
+          "stock": "Axis Bank",
+          "open": 33521.89,
+          "day_high": 33848.23,
+          "day_low": 33272.22,
+          "close": 33636.18,
+          "buy_price": 33653.24,
+          "sell_price": 33629.72,
+          "current_price": 33335.85
+        },
+        {
+          "id": 2,
+          "stock": "SBI",
+          "open": 46369.54,
+          "day_high": 46633.24,
+          "day_low": 46116.96,
+          "close": 46598.05,
+          "buy_price": 46619.26,
+          "sell_price": 46552.67,
+          "current_price": 46157.17
+        },
+        {
+          "id": 3,
+          "stock": "Kotak Mahindra Bank",
+          "open": 42200.78,
+          "day_high": 42500.44,
+          "day_low": 41901.0,
+          "close": 42316.84,
+          "buy_price": 42327.47,
+          "sell_price": 42272.36,
+          "current_price": 42070.68
+        },
+        {
+          "id": 4,
+          "stock": "HDFC Bank",
+          "open": 69328.81,
+          "day_high": 69487.7,
+          "day_low": 69027.92,
+          "close": 69475.11,
+          "buy_price": 69520.38,
+          "sell_price": 69446.43,
+          "current_price": 69157.67
+        },
+        {
+          "id": 5,
+          "stock": "ICICI Bank",
+          "open": 54781.51,
+          "day_high": 54860.4,
+          "day_low": 54423.38,
+          "close": 54717.81,
+          "buy_price": 54739.03,
+          "sell_price": 54683.99,
+          "current_price": 54828.98
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "benchmark": "Sensex",
+      "stocks": [
+        {
+          "id": 1,
+          "stock": "L&T",
+          "open": 37883.62,
+          "day_high": 38197.72,
+          "day_low": 37567.24,
+          "close": 37646.47,
+          "buy_price": 37668.48,
+          "sell_price": 37627.46,
+          "current_price": 37898.93
+        },
+        {
+          "id": 2,
+          "stock": "HUL",
+          "open": 60955.89,
+          "day_high": 61367.16,
+          "day_low": 60574.8,
+          "close": 60658.6,
+          "buy_price": 60700.11,
+          "sell_price": 60631.77,
+          "current_price": 60582.54
+        },
+        {
+          "id": 3,
+          "stock": "Bharti Airtel",
+          "open": 22654.03,
+          "day_high": 23092.7,
+          "day_low": 22164.14,
+          "close": 22779.87,
+          "buy_price": 22809.09,
+          "sell_price": 22731.42,
+          "current_price": 22654.22
+        },
+        {
+          "id": 4,
+          "stock": "Maruti Suzuki",
+          "open": 33612.28,
+          "day_high": 33873.13,
+          "day_low": 33306.36,
+          "close": 33546.16,
+          "buy_price": 33584.19,
+          "sell_price": 33538.24,
+          "current_price": 33446.46
+        },
+        {
+          "id": 5,
+          "stock": "Tata Motors",
+          "open": 74601.58,
+          "day_high": 74662.67,
+          "day_low": 74163.2,
+          "close": 74315.58,
+          "buy_price": 74320.67,
+          "sell_price": 74268.04,
+          "current_price": 74407.51
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "benchmark": "Midcap 100",
+      "stocks": [
+        {
+          "id": 1,
+          "stock": "AU Small Finance",
+          "open": 24878.41,
+          "day_high": 25218.01,
+          "day_low": 24571.11,
+          "close": 24919.2,
+          "buy_price": 24968.88,
+          "sell_price": 24884.31,
+          "current_price": 24662.44
+        },
+        {
+          "id": 2,
+          "stock": "Muthoot Finance",
+          "open": 47948.01,
+          "day_high": 48143.83,
+          "day_low": 47681.19,
+          "close": 47926.21,
+          "buy_price": 47938.85,
+          "sell_price": 47913.77,
+          "current_price": 47891.75
+        },
+        {
+          "id": 3,
+          "stock": "Balkrishna Ind",
+          "open": 59158.19,
+          "day_high": 59312.46,
+          "day_low": 58993.27,
+          "close": 59238.54,
+          "buy_price": 59246.27,
+          "sell_price": 59203.97,
+          "current_price": 59050.85
+        },
+        {
+          "id": 4,
+          "stock": "Astral",
+          "open": 61018.84,
+          "day_high": 61339.28,
+          "day_low": 60617.38,
+          "close": 61268.92,
+          "buy_price": 61317.63,
+          "sell_price": 61263.15,
+          "current_price": 60688.25
+        },
+        {
+          "id": 5,
+          "stock": "Coromandel Intl",
+          "open": 36107.37,
+          "day_high": 36227.35,
+          "day_low": 35965.12,
+          "close": 36146.49,
+          "buy_price": 36188.06,
+          "sell_price": 36098.67,
+          "current_price": 35998.73
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "benchmark": "Smallcap 100",
+      "stocks": [
+        {
+          "id": 1,
+          "stock": "Mazagon Dock",
+          "open": 48112.8,
+          "day_high": 48221.66,
+          "day_low": 47678.68,
+          "close": 47865.3,
+          "buy_price": 47905.9,
+          "sell_price": 47845.85,
+          "current_price": 47729.91
+        },
+        {
+          "id": 2,
+          "stock": "Indigo Paints",
+          "open": 61920.95,
+          "day_high": 62398.35,
+          "day_low": 61735.91,
+          "close": 62003.33,
+          "buy_price": 62033.76,
+          "sell_price": 61966.81,
+          "current_price": 62315.91
+        },
+        {
+          "id": 3,
+          "stock": "Borosil",
+          "open": 29078.73,
+          "day_high": 29156.05,
+          "day_low": 28811.56,
+          "close": 29020.81,
+          "buy_price": 29042.98,
+          "sell_price": 29011.09,
+          "current_price": 29071.06
+        },
+        {
+          "id": 4,
+          "stock": "VST Tillers",
+          "open": 44376.31,
+          "day_high": 44515.78,
+          "day_low": 43933.92,
+          "close": 44485.45,
+          "buy_price": 44503.61,
+          "sell_price": 44475.65,
+          "current_price": 44439.47
+        },
+        {
+          "id": 5,
+          "stock": "Balaji Amines",
+          "open": 41633.02,
+          "day_high": 41952.16,
+          "day_low": 41238.38,
+          "close": 41727.59,
+          "buy_price": 41764.86,
+          "sell_price": 41716.4,
+          "current_price": 41719.9
+        }
+      ]
+    }
+  ]
+}
