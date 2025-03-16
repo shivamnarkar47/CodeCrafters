@@ -219,15 +219,14 @@ class Favorite(models.Model):
         # unique_together = ("user", "stock_symbol")
 
 class Transaction(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="transactions")
-    stock_symbol = models.CharField(max_length=20)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="transactions")
+    stock_symbol = models.CharField(max_length=20, blank=True, null=True)
     stock_name = models.CharField(max_length=255, blank=True, null=True)
     exchange = models.CharField(max_length=50, blank=True, null=True)
-    transaction_type = models.CharField(max_length=10)
-    quantity = models.PositiveIntegerField()
-    price = models.DecimalField(max_digits=14, decimal_places=2)
+    transaction_type = models.CharField(max_length=10, blank=True, null=True)
+    quantity = models.PositiveIntegerField(default=0)
+    price = models.DecimalField(default=0, max_digits=15, decimal_places=2)
     
-
     def __str__(self):
         return str(self.id)
 
