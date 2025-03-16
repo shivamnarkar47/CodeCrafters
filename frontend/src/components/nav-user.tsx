@@ -31,6 +31,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { useUserContext } from "@/context/ContextProvider"
 
 export function NavUser({
   user,
@@ -42,7 +43,7 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-
+const {logout} = useUserContext()
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -96,7 +97,7 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <Link to="/" >
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
                 <LogOut />
                 Log out
             </DropdownMenuItem>

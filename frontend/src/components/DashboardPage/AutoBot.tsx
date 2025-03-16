@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { request } from "@/lib/axiosRequest";
 
 const AutoBot = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ const AutoBot = () => {
           stock_name: "Apple Inc.",
           exchange: "Stocks",
           btn: data.market_data?.current_price?.usd || 0,
-          investment: 1000,
+          investment: 200,
           brokerage_fee: 5,
           taxes: 2,
           other_charges: 1,
@@ -37,8 +38,11 @@ const AutoBot = () => {
 
   const fetchSubmissionResponse = async () => {
     try {
-      const response = await fetch("api/grid-trading/bot/");
-      const result = await response.json();
+      const response = await request({
+        url:"api/grid-trading/bot",
+        method: "GET",
+      });
+      const result = await response.data;
       console.log("API Response:", result);
     } catch (error) {
       console.error("Error fetching submission response:", error);
@@ -66,13 +70,15 @@ const AutoBot = () => {
     console.log("Submitting Data:", data); 
 
     try {
-      const response = await fetch("api/grid-trading/bot/", {
+      const response = await request({ 
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        url:"api/grid-trading/bot",
+        data: JSON.stringify(data),
       });
 
-      const result = await response.json();
+
+      const result = await response.data;
       console.log("AutoBot Created:", result);
       alert("AutoBot created successfully!");
 

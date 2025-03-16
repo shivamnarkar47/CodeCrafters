@@ -36,6 +36,7 @@ import { ModeToggle } from "./mode-toggle"
 import { Link } from "react-router-dom"
 import { useUserContext } from "@/context/ContextProvider"
 import { title } from "process"
+import { IconRobot } from "@tabler/icons-react"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -83,7 +84,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {
         title: "Autobot",
         url: "/dashboard/autobot",
-        icon: ChartCandlestick,
+        icon: IconRobot,
 
       },
       // {

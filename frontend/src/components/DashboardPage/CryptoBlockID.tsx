@@ -116,7 +116,7 @@ const CryptoBlockID = () => {
                                                             <NumberFieldInput onChange={(e) => { setQuantity(Number(e.target.value)) }} />
                                                             <NumberFieldSteppers />
                                                         </FieldGroup>
-                                                        <FieldError className={"text-red-400"}>{error}</FieldError>
+                                                        <p className={"text-red-400"}>{error}</p>
                                                     </NumberField>
                                                 </div>
                                                 <DialogFooter>
