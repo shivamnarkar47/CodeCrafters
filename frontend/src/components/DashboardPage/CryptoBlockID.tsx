@@ -11,7 +11,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { FieldGroup, Label } from "@/components/ui/field"
+import { FieldError, FieldGroup, Label } from "@/components/ui/field"
 // import { Input, TextField } from "@/components/ui/textfield"
 import { NumberField, NumberFieldInput, NumberFieldSteppers } from "../ui/numberfield"
 const formatCurrency = (value: any) => {
@@ -59,23 +59,28 @@ const CryptoBlockID = () => {
             navigate('/dashboard/watchlist')
         })
     }
-
+        const [error, setError] = useState("");
     const buyCrypto = () => {
         request({
             method: "POST",
-            url: "transactions",
+            url: "stocks/buy",
             data: {
                 stock_symbol: cryptoData.symbol,
                 stock_name: cryptoData.name,
                 exchange: "crypto",
-                price: cryptoData.market_data.current_price.inr*quantity,
+                price_per_share: cryptoData.market_data.current_price.inr,
                 quantity: quantity,
-                transaction_type: "buy"
+                // transaction_type: "buy"
             }
         }).then((res) => {
             console.log(res.data)
+            navigate('/dashboard/investments')
+        }).catch((err) => {
+            console.log(err)
+            setError(err.response?.data?.error ||err.response?.data?.code || "Failed to buy the stock");
+        }
+        )
 
-        })
     }
 
     const [quantity, setQuantity] = useState(1);
@@ -105,12 +110,13 @@ const CryptoBlockID = () => {
                                                     <DialogTitle>Invest in your future :)</DialogTitle>
                                                 </DialogHeader>
                                                 <div className="grid gap-4 py-4">
-                                                    <NumberField defaultValue={10} minValue={1}>
+                                                    <NumberField defaultValue={1} minValue={1}>
                                                         <Label className="p-2 ">Quantity</Label>
                                                         <FieldGroup className={'my-4'}>
                                                             <NumberFieldInput onChange={(e) => { setQuantity(Number(e.target.value)) }} />
                                                             <NumberFieldSteppers />
                                                         </FieldGroup>
+                                                        <p className={"text-red-400"}>{error}</p>
                                                     </NumberField>
                                                 </div>
                                                 <DialogFooter>

@@ -219,16 +219,29 @@ class Favorite(models.Model):
         # unique_together = ("user", "stock_symbol")
 
 class Transaction(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name="transactions")
-    stock_symbol = models.CharField(max_length=20, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="transactions")
+    stock_symbol = models.CharField(max_length=20)
     stock_name = models.CharField(max_length=255, blank=True, null=True)
     exchange = models.CharField(max_length=50, blank=True, null=True)
-    transaction_type = models.CharField(max_length=10, blank=True, null=True)
-    quantity = models.PositiveIntegerField(default=0)
-    price = models.DecimalField(default=0, max_digits=15, decimal_places=2)
+    transaction_type = models.CharField(max_length=10)
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=14, decimal_places=2)
     
+
     def __str__(self):
         return str(self.id)
+    class Meta:
+        db_table = "Transaction"
+        
+        
+class RazorPay(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="razorpay")
+    payment_id = models.CharField(max_length=255)
+    order_id = models.CharField(max_length=255)
+    signature = models.CharField(max_length=255)
+    amount = models.DecimalField(max_digits=14, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class StockTransaction(models.Model):
     TRANSACTION_TYPES = (

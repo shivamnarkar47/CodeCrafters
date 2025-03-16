@@ -165,15 +165,14 @@ class MarketPriceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class TransactionSerializer(serializers.Serializer):
-    stock_symbol = serializers.CharField(max_length=20, required=True)
-    stock_name = serializers.CharField(max_length=100, required=True)
-    exchange = serializers.CharField(max_length=50, required=True)
-    price = serializers.DecimalField(max_digits=20, decimal_places=2, required=True)
-    quantity = serializers.IntegerField(required=True)
-    transaction_type = serializers.ChoiceField(choices=["buy", "sell"], required=True)
-    
+
+
+class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = '__all__'
 
+class RazorPaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RazorPay
+        fields = '__all__'

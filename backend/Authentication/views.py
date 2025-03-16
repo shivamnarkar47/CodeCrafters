@@ -768,7 +768,7 @@ class MarketPriceAPIView(APIView):
 @api_view(["POST"])
 def UPIintegration(request):
     try:
-        transaction_serializer = TransactionSerailzer(data=request.data)
+        transaction_serializer = RazorPaySerializer(data=request.data)
         if transaction_serializer.is_valid():
             rz_client.verify_payment(
                 payment_id=transaction_serializer.validated_data["payment_id"],
@@ -790,32 +790,36 @@ def UPIintegration(request):
         return Response(e, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(["POST"])
-def TransactionListCreateView(request):
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_wallet(request):
     try:
-        transaction_serializer = TransactionSerializer(data=request.data)
-        
-        if transaction_serializer.is_valid():
-            transaction_serializer.save()
-            
-            response = {
-                "status_code": status.HTTP_201_CREATED,
-                "message": "Transaction Created Successfully",
-                "data": transaction_serializer.data,
-            }
-            return Response(response, status=status.HTTP_201_CREATED)
-        else:
-            # Return validation errors if data is invalid
-            return Response(
-                {"status_code": status.HTTP_400_BAD_REQUEST, "errors": transaction_serializer.errors},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        wallet = request.user.wallet
+        return Response({"wallet": wallet}, status=status.HTTP_200_OK)
     except Exception as e:
-        # Handle unexpected exceptions
-        return Response(
-            {"status_code": status.HTTP_400_BAD_REQUEST, "error": str(e)},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def add_wallet(request):
+    try:
+        amount = request.data.get("amount")
+        if not amount:
+            return Response({"error": "Amount is required"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        amount = Decimal(str(amount))
+        if amount <= 0:
+            return Response({"error": "Amount must be greater than zero"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        request.user.wallet += amount
+        request.user.save()
+        
+        return Response({"message": "Amount added to wallet successfully"}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
+
     
 from django.http import HttpResponse
 from rest_framework.views import APIView

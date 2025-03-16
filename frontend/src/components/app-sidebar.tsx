@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as React from "react"
 import {
   BookOpen,
@@ -34,10 +35,13 @@ import {
 import { ModeToggle } from "./mode-toggle"
 import { Link } from "react-router-dom"
 import { useUserContext } from "@/context/ContextProvider"
+import { title } from "process"
+import { IconRobot } from "@tabler/icons-react"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const {user} = useUserContext()
+  const { user } = useUserContext()
+  console.log(user)
   const data = {
     userData: {
       name: `${user.first_name}`,
@@ -69,32 +73,38 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: "WatchList",
         url: "/dashboard/watchlist",
         icon: Clock,
-        
+
       },
       {
         title: "Investments",
         url: "/dashboard/investments",
-        icon: ChartCandlestick ,
-        
+        icon: ChartCandlestick,
+
       },
       {
         title: "Autobot",
         url: "/dashboard/autobot",
-        icon: ChartCandlestick ,
-        
+        icon: IconRobot,
+
       },
+      // {
+      //   title: "Wallet",
+      //   url: "/dashboard/wallet",
+      //   icon: SquareTerminal,
+      // }
     ],
     navSecondary: [
-      // {
-      //   title: "Support",
-      //   url: "#",
-      //   icon: LifeBuoy,
-      // },
-      // {
-      //   title: "Light/Dark Mode",
-      //   url: "#",
-      //   icon: Moon,
-      // },
+    // {
+    //   title: "Support",
+    //   url: "#",
+    //   icon: LifeBuoy,
+    // },
+    // {
+    //   title: "Light/Dark Mode",
+    //   url: "#",
+    //   icon: Moon,
+    // },
+
     ],
     projects: [
       {
@@ -114,7 +124,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
     ],
   }
-  
+
   return (
     <Sidebar
       className="md:h-full h-[80vh] pt-10"
