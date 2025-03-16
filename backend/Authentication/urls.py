@@ -15,5 +15,6 @@ urlpatterns = [
     path("transactions/", TransactionListCreateView, name="transactions"),
     path("upi/", UPIintegration, name="UPIintegration"),
     path('api/grid-trading/bot/', GridTradingBotAPIView.as_view(), name='grid-trading-bot'),
+    path('get-report/', PortfolioExcelReportView.as_view(), name='get-report'),
     path('api/grid-trading/bot/<str:stock_symbol>/', GridTradingBotDetailAPIView.as_view(), name='grid-trading-bot-detail'),
 ]

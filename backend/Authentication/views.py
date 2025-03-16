@@ -816,3 +816,185 @@ def TransactionListCreateView(request):
             {"status_code": status.HTTP_400_BAD_REQUEST, "error": str(e)},
             status=status.HTTP_400_BAD_REQUEST,
         )
+    
+from django.http import HttpResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+import pandas as pd
+import matplotlib.pyplot as plt
+import io
+import numpy as np
+from datetime import datetime, timedelta
+from xlsxwriter.utility import xl_rowcol_to_cell
+from django.db.models import Sum, F, Value, DecimalField
+from django.db.models.functions import Coalesce
+
+from .models import (
+    User, Portfolio, StockPosition, StockPrice, 
+    StockTransaction, MarketIndex, MarketPrice
+)
+
+
+import io
+import pandas as pd
+import datetime
+from datetime import timedelta
+from django.http import HttpResponse
+from django.utils.timezone import now
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from xlsxwriter.utility import xl_col_to_name
+from .models import Portfolio, StockPosition, StockPrice, StockTransaction  # Update with actual app name
+
+class PortfolioExcelReportView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        user = request.user
+        output = io.BytesIO()
+        writer = pd.ExcelWriter(output, engine='xlsxwriter')
+        workbook = writer.book
+        
+        header_format = workbook.add_format({'bold': True, 'text_wrap': True, 'valign': 'top', 'bg_color': '#D9E1F2', 'border': 1})
+        money_format = workbook.add_format({'num_format': '#,##0.00'})
+        percent_format = workbook.add_format({'num_format': '0.00%'})
+        date_format = workbook.add_format({'num_format': 'yyyy-mm-dd'})
+        
+        self._create_portfolio_summary(user, writer, workbook, header_format, money_format, percent_format)
+        self._create_stock_positions(user, writer, workbook, header_format, money_format, percent_format)
+        self._create_transaction_history(user, writer, workbook, header_format, money_format, date_format)
+        self._create_performance_charts(user, writer, workbook, header_format, money_format, percent_format)
+        
+        writer.close()
+        output.seek(0)
+        filename = f"Portfolio_Report_{user.email}_{now().strftime('%Y%m%d')}.xlsx"
+        
+        response = HttpResponse(output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response
+    
+    def _create_portfolio_summary(self, user, writer, workbook, header_format, money_format, percent_format):
+        portfolio, _ = Portfolio.objects.get_or_create(user=user)
+        positions = StockPosition.objects.filter(user=user, quantity__gt=0)
+        total_invested = sum(pos.quantity * pos.average_price for pos in positions)
+        position_values = []
+        for position in positions:
+            latest_price = StockPrice.objects.filter(stock_symbol=position.stock_symbol).order_by('-date').first()
+            current_price = latest_price.closing_price if latest_price else position.average_price
+            position_values.append(position.quantity * current_price)
+        total_current_value = sum(position_values)
+        gain_loss = total_current_value - total_invested
+        gain_loss_percent = (gain_loss / total_invested) if total_invested > 0 else 0
+        summary_data = {'Metric': ['Total Portfolio Value', 'Total Invested', 'Unrealized Gain/Loss', 'Gain/Loss Percentage', 'Portfolio Beta'],
+                        'Value': [total_current_value, total_invested, gain_loss, gain_loss_percent, portfolio.beta]}
+        df_summary = pd.DataFrame(summary_data)
+        sheet_name = 'Portfolio Summary'
+        
+        df_summary.to_excel(writer, sheet_name=sheet_name, index=False)
+        worksheet = writer.sheets[sheet_name]
+        worksheet.set_column('A:A', 25)
+        worksheet.set_column('B:B', 15, money_format)
+        worksheet.write(3, 1, gain_loss_percent, percent_format)
+        
+    def _create_stock_positions(self, user, writer, workbook, header_format, money_format, percent_format):
+        positions = StockPosition.objects.filter(user=user, quantity__gt=0)
+        position_data = []
+        for position in positions:
+            latest_price = StockPrice.objects.filter(stock_symbol=position.stock_symbol).order_by('-date').first()
+            current_price = latest_price.closing_price if latest_price else position.average_price
+            current_value = position.quantity * current_price
+            cost_basis = position.quantity * position.average_price
+            gain_loss = current_value - cost_basis
+            gain_loss_percent = (gain_loss / cost_basis) if cost_basis > 0 else 0
+            position_data.append({'Symbol': position.stock_symbol, 'Name': position.stock_name, 'Quantity': position.quantity,
+                                  'Average Cost': float(position.average_price), 'Current Price': float(current_price),
+                                  'Current Value': float(current_value), 'Cost Basis': float(cost_basis),
+                                  'Gain/Loss': float(gain_loss), 'Gain/Loss %': gain_loss_percent, 'Beta': position.calculate_beta()})
+        df_positions = pd.DataFrame(position_data) if position_data else pd.DataFrame(
+            columns=['Symbol', 'Name', 'Quantity', 'Average Cost', 'Current Price', 'Current Value', 'Cost Basis', 'Gain/Loss', 'Gain/Loss %', 'Beta'])
+        sheet_name = 'Stock Positions'
+        df_positions.to_excel(writer, sheet_name=sheet_name, index=False)
+        worksheet = writer.sheets[sheet_name]
+        worksheet.set_column('A:A', 8)
+        worksheet.set_column('B:B', 20)
+        worksheet.set_column('C:C', 10)
+        worksheet.set_column('D:J', 12)
+        
+    def _create_transaction_history(self, user, writer, workbook, header_format, money_format, date_format):
+        transactions = StockTransaction.objects.filter(user=user).order_by('-order_date')
+
+        transaction_data = []
+        for txn in transactions:
+            txn_date = txn.execution_date if txn.execution_date else txn.order_date
+            transaction_data.append({
+                'Date': txn_date.date() if txn_date else None,  # Extract only the date
+                'Time': txn_date.time() if txn_date else None,  # Extract only the time
+                'Symbol': txn.stock_symbol,
+                'Type': txn.transaction_type,
+                'Quantity': txn.quantity,
+                'Price': float(txn.price_per_share),
+                'Total Amount': float(txn.total_amount),
+                'Status': txn.status,
+                'Fees': float(txn.brokerage_fee + txn.taxes + txn.other_charges)
+            })
+
+        df_transactions = pd.DataFrame(transaction_data) if transaction_data else pd.DataFrame(
+            columns=['Date', 'Time', 'Symbol', 'Type', 'Quantity', 'Price', 'Total Amount', 'Status', 'Fees'])
+
+        # Write to Excel
+        sheet_name = 'Transaction History'
+        df_transactions.to_excel(writer, sheet_name=sheet_name, index=False)
+
+        # Get the worksheet object
+        worksheet = writer.sheets[sheet_name]
+
+        # Set column widths
+        worksheet.set_column('A:A', 12, date_format)  # Date
+        worksheet.set_column('B:B', 12)  # Time
+        worksheet.set_column('C:C', 8)  # Symbol
+        worksheet.set_column('D:D', 8)  # Type
+        worksheet.set_column('E:E', 10)  # Quantity
+        worksheet.set_column('F:H', 12, money_format)  # Price, Total Amount, Fees
+
+        # Apply header format
+        for col_num, value in enumerate(df_transactions.columns.values):
+            worksheet.write(0, col_num, value, header_format)
+
+        
+    def _create_performance_charts(self, user, writer, workbook, header_format, money_format, percent_format):
+        sheet_name = 'Performance'
+        worksheet = workbook.add_worksheet(sheet_name)
+        transactions = StockTransaction.objects.filter(user=user, status='EXECUTED').order_by('execution_date')
+        if not transactions.exists():
+            worksheet.write('A1', 'No performance data available', header_format)
+            return
+        
+        # Format dates as strings in a consistent format
+        formatted_dates = ['Date']
+        for txn in transactions:
+            formatted_dates.append(txn.execution_date.date().strftime('%Y-%m-%d'))
+        
+        values = ['Portfolio Value']
+        for txn in transactions:
+            values.append(txn.quantity * txn.price_per_share)
+        
+        worksheet.write_column('A1', formatted_dates)
+        worksheet.write_column('B1', values)
+        
+        chart = workbook.add_chart({'type': 'line'})
+        chart.add_series({
+            'name': 'Portfolio Value',
+            'categories': f'={sheet_name}!$A$2:$A${len(formatted_dates) - 1 + 1}',
+            'values': f'={sheet_name}!$B$2:$B${len(values) - 1 + 1}',
+            'line': {'color': 'blue'}
+        })
+        
+        chart.set_title({'name': 'Portfolio Performance Over Time'})
+        chart.set_x_axis({'name': 'Date'})
+        chart.set_y_axis({'name': 'Portfolio Value', 'num_format': '$#,##0.00'})
+        worksheet.insert_chart('D2', chart)
+        
+        worksheet.set_column('A:A', 15, header_format)
+        worksheet.set_column('B:B', 20, money_format)
