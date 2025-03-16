@@ -787,3 +787,31 @@ def UPIintegration(request):
             )
     except Exception as e:
         return Response(e, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+def TransactionListCreateView(request):
+    try:
+        transaction_serializer = TransactionSerializer(data=request.data)
+        
+        if transaction_serializer.is_valid():
+            transaction_serializer.save()
+            
+            response = {
+                "status_code": status.HTTP_201_CREATED,
+                "message": "Transaction Created Successfully",
+                "data": transaction_serializer.data,
+            }
+            return Response(response, status=status.HTTP_201_CREATED)
+        else:
+            # Return validation errors if data is invalid
+            return Response(
+                {"status_code": status.HTTP_400_BAD_REQUEST, "errors": transaction_serializer.errors},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+    except Exception as e:
+        # Handle unexpected exceptions
+        return Response(
+            {"status_code": status.HTTP_400_BAD_REQUEST, "error": str(e)},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
