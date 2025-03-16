@@ -6,7 +6,6 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
@@ -33,11 +32,11 @@ const location = useLocation()
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink>{location.pathname.split("/")[2]}</BreadcrumbLink>
+            <BreadcrumbLink>{location.pathname.split("/")[2]?.charAt(0).toUpperCase() + location.pathname.split("/")[2]?.slice(1)}</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator className={location.pathname.split("/")[2] === undefined ? "hidden" : "block"} />
             <BreadcrumbItem>
-              <BreadcrumbLink >{location.pathname.split("/")[3]}</BreadcrumbLink>
+            {location.pathname.split("/")[3] && <BreadcrumbLink>{location.pathname.split("/")[3]?.charAt(0).toUpperCase() + location.pathname.split("/")[3]?.slice(1)}</BreadcrumbLink>}
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

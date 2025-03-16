@@ -79,6 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: "Investments",
         url: "/dashboard/investments",
         icon: ChartCandlestick,
+        
 
       },
       {

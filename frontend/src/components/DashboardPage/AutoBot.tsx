@@ -36,6 +36,7 @@ const AutoBot = () => {
     fetchCryptoData();
   }, [id]);
 
+  const [results,setResults] = useState<any>(null);
   const fetchSubmissionResponse = async () => {
     try {
       const response = await request({
@@ -44,6 +45,7 @@ const AutoBot = () => {
       });
       const result = await response.data;
       console.log("API Response:", result);
+      setResults
     } catch (error) {
       console.error("Error fetching submission response:", error);
     }
