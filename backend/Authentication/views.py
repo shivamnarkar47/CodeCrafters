@@ -411,12 +411,8 @@ class GridTradingAutobot:
             
             if latest_price:
                 return latest_price.current_price
-            else:
-                # Fallback to mock price if no data exists
-                return self._generate_mock_price()
         except Exception as e:
             print(f"Error fetching price: {str(e)}")
-            return self._generate_mock_price()
 
     
     def execute_buy(self, price):
@@ -709,7 +705,12 @@ from .serializers import FavoriteSerializer
 
 class FavoriteListCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-
+    def delete(self, request, *args, **kwargs):
+        stock_symbol = request.data.get("stock_symbol")
+        favorite = Favorite.objects.get(user=request.user,stock_symbol=stock_symbol)
+        favorite.delete()
+        return Response({"message": "Removed from Favorite."}, status=status.HTTP_200_OK)
+    
     def get(self, request):
         favorites = Favorite.objects.filter(user=request.user)
         serializer = FavoriteSerializer(favorites, many=True)
