@@ -86,30 +86,11 @@ const Investments = () => {
         data: { stock_symbol: stockSymbol, quantity, price_per_share },
       });
 
-      if (response.status === 200) {
-        toast.success(`Successfully sold ${quantity} shares of ${stockSymbol}!`);
-        setSellData((prev) => ({ ...prev, [stockSymbol]: {} }));
-        setPositions((prev) => prev.filter((position) => position.stock_symbol !== stockSymbol));
-        setPositions((prev) =>
-          prev
-            .map((position) =>
-              position.stock_symbol === stockSymbol
-                ? { ...position, quantity: position.quantity - quantity }
-                : position
-            )
-            .filter((position) => position.quantity > 0)
-        );
+      const data = await response.data;
+      console.log(data);
+        fetchInvestments();
         
-        setPortfolio((prev) =>
-          prev
-            ? {
-                ...prev,
-                asset_value: prev.asset_value - quantity * price_per_share,
-              }
-            : null
-        );
         
-      }
     } catch (error) {
       toast.error("Failed to sell stock. Try again.");
     }

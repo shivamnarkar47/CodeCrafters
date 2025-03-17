@@ -128,7 +128,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar
-      className="md:h-full h-[80vh] pt-10"
+      className="md:h-full h-[80vh] pt-14"
       {...props}
     >
       <SidebarHeader>

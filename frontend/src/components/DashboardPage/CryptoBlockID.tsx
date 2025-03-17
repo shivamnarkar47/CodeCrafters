@@ -110,10 +110,10 @@ const CryptoBlockID = () => {
                                                     <DialogTitle>Invest in your future :)</DialogTitle>
                                                 </DialogHeader>
                                                 <div className="grid gap-4 py-4">
-                                                    <NumberField defaultValue={1} minValue={1}>
+                                                    <NumberField defaultValue={0.1} minValue={0.1}>
                                                         <Label className="p-2 ">Quantity</Label>
                                                         <FieldGroup className={'my-4'}>
-                                                            <NumberFieldInput onChange={(e) => { setQuantity(Number(e.target.value)) }} />
+                                                            <NumberFieldInput onChange={(e) => setQuantity(parseFloat(e.target.value)) } />
                                                             <NumberFieldSteppers />
                                                         </FieldGroup>
                                                         <p className={"text-red-400"}>{error}</p>

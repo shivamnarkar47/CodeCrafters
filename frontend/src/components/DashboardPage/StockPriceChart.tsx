@@ -119,8 +119,8 @@ const StockPriceChart = ({ initialData }) => {
   };
 
   return (
-    <Card className="w-full shadow-lg">
-      <CardHeader className="pb-2">
+    <Card className="w-full border-none shadow-none">
+      <CardHeader className="pb-2">4
         <div className="flex justify-between items-center">
           <CardTitle className="text-2xl font-bold">Market Snapshot</CardTitle>
           <div className="flex items-center text-sm text-gray-500">
@@ -129,7 +129,7 @@ const StockPriceChart = ({ initialData }) => {
           </div>
         </div>
         <CardDescription>
-          Real-time stock data (5-second updates)
+          Real-time stock data (30-second updates)
         </CardDescription>
       </CardHeader>
       
