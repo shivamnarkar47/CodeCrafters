@@ -37,9 +37,24 @@ const Investments = () => {
       setError(e instanceof Error ? e.message : "An unknown error occurred");
     }
   };
+  const getAllTransactions = async () => {
+    try {
+        const response = await request({
+          method: "GET",
+          url: "get_transactions",
+        });
+  
+        setLastTransactions(response.data);
+
+  
+      } catch (error) {
+        setError("Failed to fetch transactions. Try again.");
+      }
+    }
 
   useEffect(() => {
     fetchInvestments();
+    getAllTransactions();
   }, []);
 
   const handleInputChange = (stockSymbol: string, value: number) => {
@@ -70,6 +85,10 @@ const Investments = () => {
       setError("Failed to download CSV. Try again.");
     }
   }
+
+  const [lastTransactions, setLastTransactions] = useState<any[]>([]);
+
+  
 
   const handleSell = async (stockSymbol: string, price_per_share: number) => {
     const { quantity } = sellData[stockSymbol] || {};
@@ -185,6 +204,37 @@ const Investments = () => {
               </TableBody>
             </Table>
           )}
+        </CardContent>
+      </Card>
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle className="text-xl">Last Transactions</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table className="border rounded-lg overflow-hidden">
+            <TableHeader>
+              <TableRow className="bg-gray-100 text-gray-800">
+                <TableHead>Stock Name</TableHead>
+                <TableHead>Symbol</TableHead>
+                <TableHead>Quantity</TableHead>
+                <TableHead>Price ($)</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Date</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {lastTransactions != undefined && lastTransactions.map((transaction) => (
+                <TableRow key={transaction.id} className="hover:bg-gray-50 transition">
+                  <TableCell>{transaction.stock_name}</TableCell>
+                  <TableCell className="text-gray-700 font-medium">{transaction.stock_symbol}</TableCell>
+                  <TableCell>{transaction.quantity}</TableCell>
+                  <TableCell>${transaction.price_per_share}</TableCell>
+                  <TableCell>{transaction.type}</TableCell>
+                  <TableCell>{new Date(transaction.created_at).toLocaleString()}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </CardContent>
       </Card>
     </div>

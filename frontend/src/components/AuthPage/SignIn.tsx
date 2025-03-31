@@ -13,11 +13,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { PasswordInput } from "./password-input";
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@/components/ui/popover";
 import { request } from "@/lib/axiosRequest";
 import { resetAllTokens, setAccessToken, setRefreshToken, useUserContext } from "@/context/ContextProvider";
 
@@ -40,8 +35,7 @@ export default function SignIn() {
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-      // Do something with the form values.
-      // ✅ This will be type-safe and validated.
+
       console.log(values);
   
       request({
@@ -144,14 +138,7 @@ export default function SignIn() {
           </button>
         </form>
         
-        {/* <div className="text-center">
-          <a
-            href="javascript:void(0)"
-            className="/40 hover:text-pink-500/90"
-          >
-            Forgot password?
-          </a>
-        </div> */}
+      
       </Form>
       </div>
     </main>
